@@ -4,6 +4,7 @@
     {
         private static void Main()
         {
+            //Console.WriteLine("Program start: " + DateTime.Now);
             var tasks = new List<Task>();
             var baseCat = new List<string>()
             {
@@ -40,7 +41,7 @@
             //for (int i = 1; i <= 100; i++)
             //    tasks.Add(Parser.CatalogGet(url + $"page:{i}", result));
             //Task.WaitAll(tasks.ToArray());
-            Console.ReadKey();
+            //Console.WriteLine("Program end: " + DateTime.Now);
         }
     }
 }

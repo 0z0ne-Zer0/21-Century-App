@@ -11,7 +11,7 @@ namespace Code
             var config = Configuration.Default.WithDefaultLoader();
             using (var context = BrowsingContext.New(config))
             {
-                Thread.Sleep(rn.Next(250, 1000)); //Wait to bypass DDOS protection
+                Thread.Sleep(rn.Next(1000)); //Wait to bypass protection
                 using (var doc = await context.OpenAsync(url)) //Open URL
                 {
                     var list = doc.GetElementsByClassName("result__root"); //Parse for needed content
@@ -29,10 +29,11 @@ namespace Code
 
         public static async Task CategoryGet(string url, List<string> result) //Gets categories from section index
         {
+            //Console.WriteLine(url + " started at " + DateTime.Now);
             var config = Configuration.Default.WithDefaultLoader();
             using (var context = BrowsingContext.New(config))
             {
-                Thread.Sleep(rn.Next(250, 1000));
+                //Thread.Sleep(rn.Next(500));
                 using (var doc = await context.OpenAsync(url)) //Open given URL
                 {
                     //Console.WriteLine("parsing: " + url);
@@ -43,12 +44,13 @@ namespace Code
                         if (item.InnerHtml.Contains("span")) //Sorting out garbage
                             continue;
                         var link = item.GetAttribute("href");
-                        if (String.IsNullOrEmpty(link)) //Sorting out garbage (second time)
+                        if (String.IsNullOrEmpty(link) || link.Split("/").Length > 5) //Sorting out garbage (second time)
                             continue;
                         result.Add(link);
                     }
                 }
             }
+            //Console.WriteLine(url + " ended at " + DateTime.Now);
         }
 
         public static async Task<int> PageCountGet(string url) //Gets page count in given Catalog

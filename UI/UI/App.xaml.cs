@@ -1,14 +1,10 @@
-﻿using System;
-using UI.Services;
-using UI.Views;
+﻿using UI.Services;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace UI
 {
     public partial class App : Application
     {
-
         public App()
         {
             InitializeComponent();

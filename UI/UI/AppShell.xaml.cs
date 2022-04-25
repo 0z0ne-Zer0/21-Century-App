@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using UI.ViewModels;
 using UI.Views;
 using Xamarin.Forms;
 
