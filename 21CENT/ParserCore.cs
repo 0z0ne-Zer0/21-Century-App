@@ -2,7 +2,7 @@
 
 namespace Code
 {
-    internal class Parser
+    internal class ParserCore
     {
         private static Random rn = new Random(DateTime.Now.Second);
 
@@ -61,7 +61,7 @@ namespace Code
             {
                 using (var doc = await context.OpenAsync(url)) //Open URL
                 {
-                    //Console.WriteLine("page count of " + url);
+                    Console.WriteLine("page count of " + url);
                     var T = doc.GetElementsByClassName("cr-paging_nav"); //Get page count if exists
                     if (T.Length == 0)
                         return pageAMT;
