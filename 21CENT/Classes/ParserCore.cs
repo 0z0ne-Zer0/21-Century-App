@@ -1,4 +1,5 @@
 ﻿using AngleSharp;
+using Pastel;
 
 namespace Code
 {
@@ -62,7 +63,7 @@ namespace Code
             {
                 using (var doc = await context.OpenAsync(url)) //Open URL
                 {
-                    Console.WriteLine("page count of " + url);
+                    Console.WriteLine($"{DateTime.Now}\tDebug: page count of {url}".Pastel("#9c9c9c"));
                     var T = doc.GetElementsByClassName("cr-paging_nav"); //Get page count if exists
                     if (T.Length == 0)
                         return pageAMT;
