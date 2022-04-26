@@ -28,26 +28,30 @@ namespace Code
 
         private static object syncObject = new object();
 
-        public static void CategoryParser(List<List<string>> subCat) //Category parse
+        public static void CategoryParser(List<List<Tuple<string, string>>> subCat) //Category parse
         {
             var tasks = new List<Task>();
-            for (int i = 0; i < subCat.Count; i++)
-                subCat[i] = new List<string>();
+            for (int i = 0; i < 18; i++)
+                subCat.Add(new List<Tuple<string, string>>());
             for (int i = 0; i < baseCat.Count; i++)
                 tasks.Add(ParserCore.CategoryGet(baseCat[i], subCat[i]));
             Task.WaitAll(tasks.ToArray());
+            for (int i = 0; i < 18; i++)
+                SQLWorker.InsertList<string, string>(subCat[i], "Name", "URL", $"INSERT INTO subcat (Name, URL, MCID) VALUES(?,?,{i + 1})");
         }
 
-        public static async Task PageParser(List<string> subCat, int[] pageCount, int o) //Page counting for URL subset
+        public static async Task PageParser(List<Tuple<string>> subCat) //Page counting for URL subset
         {
-            Console.WriteLine(($"OPID{o + 1}.\tStarting parsing {baseCat[o]} for page counts now.\t" + DateTime.Now).Pastel("#FFFF00"));
+            Console.WriteLine(($"Starting parsing {subCat} for page counts now.\t" + DateTime.Now).Pastel("#FFFF00"));
             var tasks = new List<Task<int>>();
             for (int i = 0; i < subCat.Count; i++)
-                tasks.Add(ParserCore.PageCountGet(subCat[i]));
+                tasks.Add(ParserCore.PageCountGet(subCat[i].Item1));
             await Task.WhenAll(tasks.ToArray());
-            Console.WriteLine(($"OPID{o + 1}.\tPages counted.\t" + DateTime.Now).Pastel("#00FF00"));
+            Console.WriteLine(($"\tPages for {subCat} counted.\t" + DateTime.Now).Pastel("#00FF00"));
+            List<Tuple<int, string>> res = new List<Tuple<int, string>>();
             for (int i = 0; i < subCat.Count; i++)
-                pageCount[i] = tasks[i].Result;
+                res.Add(Tuple.Create(tasks[i].Result, subCat[i].Item1));
+            SQLWorker.InsertList<int, string>(res, "page", "url", $"UPDATE subcat SET Pages=page WHERE URL=url");
         }
 
         public static void CatalogParser(List<string> subCat, int[] pageCount, List<List<string>> goods) //Catalog subset parse

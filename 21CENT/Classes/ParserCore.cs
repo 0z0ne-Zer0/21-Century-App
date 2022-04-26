@@ -27,7 +27,7 @@ namespace Code
             }
         }
 
-        public static async Task CategoryGet(string url, List<string> result) //Gets categories from section index
+        public static async Task CategoryGet(string url, List<Tuple<string, string>> result) //Gets categories from section index
         {
             //Console.WriteLine(url + " started at " + DateTime.Now);
             var config = Configuration.Default.WithDefaultLoader();
@@ -46,7 +46,8 @@ namespace Code
                         var link = item.GetAttribute("href");
                         if (String.IsNullOrEmpty(link) || link.Split("/").Length > 5) //Sorting out garbage (second time)
                             continue;
-                        result.Add(link);
+                        var key = item.TextContent;
+                        result.Add(new Tuple<string, string>(key, link));
                     }
                 }
             }
