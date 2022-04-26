@@ -7,8 +7,8 @@ namespace Code
         private static void Main()
         {
             Console.WriteLine(("Program start:\t" + DateTime.Now).Pastel("#00FF00"));
-            //Console.WriteLine("Starting parsing main categories.\t" + DateTime.Now);
-            //ParseLibs.CategoryParser(new List<List<Tuple<string, string>>>(18));
+            Console.WriteLine("Starting parsing main categories.\t" + DateTime.Now);
+            ParseLibs.CategoryParser(new List<List<Tuple<string, string>>>(18));
             var tasks = new List<Task>();
             for (int i = 0; i < 18; i++)
             {

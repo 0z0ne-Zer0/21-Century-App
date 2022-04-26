@@ -37,7 +37,7 @@ namespace Code
                 tasks.Add(ParserCore.CategoryGet(baseCat[i], subCat[i]));
             Task.WaitAll(tasks.ToArray());
             for (int i = 0; i < 18; i++)
-                SQLWorker.InsertList<string, string>(subCat[i], "Name", "URL", $"INSERT INTO subcat (Name, URL, MCID) VALUES(?,?,{i + 1})");
+                SQLWorker.InsertList<string, string>(subCat[i], "Name", "URL", $"INSERT OR REPLACE INTO subcat (Name, URL, MCID) VALUES(?,?,{i + 1})");
         }
 
         public static async Task PageParser(List<Tuple<string>> subCat) //Page counting for URL subset
@@ -51,20 +51,29 @@ namespace Code
             List<Tuple<int, string>> res = new List<Tuple<int, string>>();
             for (int i = 0; i < subCat.Count; i++)
                 res.Add(Tuple.Create(tasks[i].Result, subCat[i].Item1));
-            SQLWorker.InsertList<int, string>(res, "page", "url", $"UPDATE subcat SET Pages=page WHERE URL=url");
+            try
+            {
+                Monitor.Enter(syncObject);
+                SQLWorker.InsertList<int, string>(res, "page", "url", $"UPDATE subcat SET Pages=page WHERE URL=url");
+            }
+            finally
+            {
+                Monitor.Exit(syncObject);
+            }
         }
 
-        public static void CatalogParser(List<string> subCat, int[] pageCount, List<List<string>> goods) //Catalog subset parse
+        public static void CatalogParser(List<Tuple<string, int>> subCat) //Catalog subset parse
         {
             var tasks = new List<Task>();
+            List<List<Tuple<string>>> goods = new List<List<Tuple<string>>>();
             for (int i = 0; i < subCat.Count; i++)
-                goods[i] = new List<string>();
+                goods[i] = new List<Tuple<string>>();
             for (int i = 0; i < subCat.Count; i++)
             {
                 tasks.Clear();
-                Console.WriteLine(($"OPID{i + 1}.\tStarting parsing {subCat[i]} now.\t" + DateTime.Now).Pastel("#FFFF00"));
-                for (int j = 1; j <= pageCount[i]; j++)
-                    tasks.Add(ParserCore.CatalogGet(subCat[i] + $"page:{j}", goods[i]));
+                Console.WriteLine(($"OPID{i + 1}.\tStarting parsing {subCat[i].Item1} now.\t" + DateTime.Now).Pastel("#FFFF00"));
+                for (int j = 1; j <= subCat[i].Item2; j++)
+                    tasks.Add(ParserCore.CatalogGet(subCat[i].Item1 + $"page:{j}", goods[i]));
                 Task.WaitAll(tasks.ToArray());
             }
         }

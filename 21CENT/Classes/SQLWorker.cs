@@ -139,35 +139,46 @@ namespace Code
         public static List<Tuple<W, X, Y, Z>> ReadTable<W, X, Y, Z>(string cmd)
         {
             var Data = new List<Tuple<W, X, Y, Z>>();
-            conn.Open();
-            using (SQLiteCommand command = new SQLiteCommand(cmd, conn))
+            try
             {
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                conn.Open();
+                using (SQLiteCommand command = new SQLiteCommand(cmd, conn))
                 {
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        object tmp1 = reader.GetValue(0), tmp2 = reader.GetValue(1), tmp3 = reader.GetValue(2), tmp4 = reader.GetValue(3);
-                        Data.Add(Tuple.Create((W)tmp1, (X)tmp2, (Y)tmp3, (Z)tmp4));
+                        while (reader.Read())
+                        {
+                            object tmp1 = reader.GetValue(0), tmp2 = reader.GetValue(1), tmp3 = reader.GetValue(2), tmp4 = reader.GetValue(3);
+                            Data.Add(Tuple.Create((W)tmp1, (X)tmp2, (Y)tmp3, (Z)tmp4));
+                        }
                     }
                 }
             }
+            finally { conn.Close(); }
             return Data;
         }
 
         public static List<Tuple<W, X, Y>> ReadTable<W, X, Y>(string cmd)
         {
             var Data = new List<Tuple<W, X, Y>>();
-            conn.Open();
-            using (SQLiteCommand command = new SQLiteCommand(cmd, conn))
+            try
             {
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                conn.Open();
+                using (SQLiteCommand command = new SQLiteCommand(cmd, conn))
                 {
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        object tmp1 = reader.GetValue(0), tmp2 = reader.GetValue(1), tmp3 = reader.GetValue(2);
-                        Data.Add(Tuple.Create((W)tmp1, (X)tmp2, (Y)tmp3));
+                        while (reader.Read())
+                        {
+                            object tmp1 = reader.GetValue(0), tmp2 = reader.GetValue(1), tmp3 = reader.GetValue(2);
+                            Data.Add(Tuple.Create((W)tmp1, (X)tmp2, (Y)tmp3));
+                        }
                     }
                 }
+            }
+            finally
+            {
+                conn.Close();
             }
             return Data;
         }
@@ -175,17 +186,24 @@ namespace Code
         public static List<Tuple<W, X>> ReadTable<W, X>(string cmd)
         {
             var Data = new List<Tuple<W, X>>();
-            conn.Open();
-            using (SQLiteCommand command = new SQLiteCommand(cmd, conn))
+            try
             {
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                conn.Open();
+                using (SQLiteCommand command = new SQLiteCommand(cmd, conn))
                 {
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        object tmp1 = reader.GetValue(0), tmp2 = reader.GetValue(1);
-                        Data.Add(Tuple.Create((W)tmp1, (X)tmp2));
+                        while (reader.Read())
+                        {
+                            object tmp1 = reader.GetValue(0), tmp2 = reader.GetValue(1);
+                            Data.Add(Tuple.Create((W)tmp1, (X)tmp2));
+                        }
                     }
                 }
+            }
+            finally
+            {
+                conn.Close();
             }
             return Data;
         }
@@ -193,17 +211,24 @@ namespace Code
         public static List<Tuple<W>> ReadTable<W>(string cmd)
         {
             var Data = new List<Tuple<W>>();
-            conn.Open();
-            using (SQLiteCommand command = new SQLiteCommand(cmd, conn))
+            try
             {
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                conn.Open();
+                using (SQLiteCommand command = new SQLiteCommand(cmd, conn))
                 {
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        object tmp1 = reader.GetValue(0);
-                        Data.Add(Tuple.Create((W)tmp1));
+                        while (reader.Read())
+                        {
+                            object tmp1 = reader.GetValue(0);
+                            Data.Add(Tuple.Create((W)tmp1));
+                        }
                     }
                 }
+            }
+            finally
+            {
+                conn.Close();
             }
             return Data;
         }

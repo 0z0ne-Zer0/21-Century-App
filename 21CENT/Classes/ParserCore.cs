@@ -6,7 +6,7 @@ namespace Code
     {
         private static Random rn = new Random(DateTime.Now.Second);
 
-        public static async Task CatalogGet(string url, List<string> result) //Catalog parser
+        public static async Task CatalogGet(string url, List<Tuple<string>> result) //Catalog parser
         {
             var config = Configuration.Default.WithDefaultLoader();
             using (var context = BrowsingContext.New(config))
@@ -18,8 +18,8 @@ namespace Code
                     foreach (var item in list)
                     {
                         var str = item.Children[1].GetAttribute("href") + "?print"; //Get versions for print
-                        if (!result.Contains(str)) //Eliminate copies
-                            result.Add(str);
+                        if (!result.Contains(new Tuple<string>(str))) //Eliminate copies
+                            result.Add(new Tuple<string>(str));
                         else
                             return;
                     }
