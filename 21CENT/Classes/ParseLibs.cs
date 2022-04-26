@@ -4,11 +4,17 @@ namespace Code
 {
     internal class ParseLibs
     {
-        private static List<Tuple<string>> baseCat = SQLWorker.ReadTable<string>("SELECT URL FROM maincat");
+        private static List<Tuple<string>> baseCat;
 
-        private static object syncObject = new object();
+        private static object syncObject;
 
-        public static void CategoryParser(List<List<Tuple<string, string>>> subCat) //Category parse
+        public ParseLibs()
+        {
+            baseCat = SQLWorker.Read<string>("SELECT URL FROM maincat");
+            syncObject = new object();
+        }
+
+        public void CategoryParser(List<List<Tuple<string, string>>> subCat) //Category parse
         {
             var tasks = new List<Task>();
             for (int i = 0; i < baseCat.Count; i++)
@@ -17,30 +23,24 @@ namespace Code
                 tasks.Add(ParserCore.CategoryGet(baseCat[i].Item1, subCat[i]));
             Task.WaitAll(tasks.ToArray());
             for (int i = 0; i < baseCat.Count; i++)
-                SQLWorker.InsertList<string, string>(subCat[i], "Name", "URL", $"INSERT OR IGNORE INTO subcat (Name, URL, MCID) VALUES(?,?,{i + 1})");
+                SQLWorker.Insert<string, string>(subCat[i], "Name", "URL", $"INSERT OR IGNORE INTO subcat (Name, URL, MCID) VALUES(?,?,{i + 1})");
         }
 
-        public static async Task PageParser(List<Tuple<string>> subCat, int ID) //Page counting for URL subset
+        public void PageParser(List<Tuple<string>> subCat, int ID)
         {
             Console.WriteLine($"{DateTime.Now}\tBegan counting for {baseCat[ID]}".Pastel("#00FF00"));
             List<Tuple<int, string>> res = new List<Tuple<int, string>>();
-            try
-            {
-                var tasks = new List<Task<int>>();
-                for (int i = 0; i < subCat.Count; i++)
-                    tasks.Add(ParserCore.PageCountGet(subCat[i].Item1));
-                await Task.WhenAll(tasks.ToArray());
-                for (int i = 0; i < subCat.Count; i++)
-                    res.Add(Tuple.Create(tasks[i].Result, subCat[i].Item1));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"{DateTime.Now}. Thread ID{ID}: {ex.Message}".Pastel("#FF0000"));
-            }
+            int[] vs = new int[subCat.Count];
+            Parallel.For(0, subCat.Count, i =>
+             {
+                 vs[i] = PageParserAux(subCat[i], ID);
+             });
+            for (int i = 0; i < subCat.Count; i++)
+                res.Add(Tuple.Create(vs[i], subCat[i].Item1));
             try
             {
                 Monitor.Enter(syncObject);
-                SQLWorker.InsertList<int, string>(res, "Pages", "URL", $"UPDATE subcat SET Pages=@Pages WHERE URL=@URL");
+                SQLWorker.Insert<int, string>(res, "Pages", "URL", $"UPDATE subcat SET Pages=@Pages WHERE URL=@URL");
                 Console.WriteLine($"{DateTime.Now}\tPages for {baseCat[ID]} counted.".Pastel("#00FF00"));
             }
             finally
@@ -49,7 +49,22 @@ namespace Code
             }
         }
 
-        public static void CatalogParser(List<Tuple<string, int>> subCat) //Catalog subset parse
+        private int PageParserAux(Tuple<string> subCat, int ID) //Page counting for URL subset
+        {
+            Task<int> task = null;
+            try
+            {
+                task = Task.Run(() => ParserCore.PageCountGet(subCat.Item1));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{DateTime.Now}. Thread ID{ID}: {ex.Message}.\nAttempting restart".Pastel("#FF0000"));
+                PageParserAux(subCat, ID);
+            }
+            return task.Result;
+        }
+
+        public void CatalogParser(List<Tuple<string, int>> subCat) //Catalog subset parse
         {
             var tasks = new List<Task>();
             List<List<Tuple<string>>> goods = new List<List<Tuple<string>>>();

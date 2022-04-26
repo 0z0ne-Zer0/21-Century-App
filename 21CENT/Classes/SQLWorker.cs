@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Data.SQLite;
+using Pastel;
 
 namespace Code
 {
@@ -24,8 +25,7 @@ namespace Code
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
-                    return;
+                    Console.WriteLine($"{DateTime.Now}\tCaught exception {ex.Message} while performing:\n{cmd}".Pastel("#FF0000"));
                 }
                 finally
                 {
@@ -34,7 +34,7 @@ namespace Code
             }
         }
 
-        public static void InsertList<W, X, Y, Z>(List<Tuple<W, X, Y, Z>> ts, string ins1, string ins2, string ins3, string ins4, string cmd)
+        public static void Insert<W, X, Y, Z>(List<Tuple<W, X, Y, Z>> ts, string ins1, string ins2, string ins3, string ins4, string cmd)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace Code
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"{DateTime.Now}\tCaught exception {ex.Message} while performing:\n{cmd}".Pastel("#FF0000"));
             }
             finally
             {
@@ -61,7 +61,7 @@ namespace Code
             }
         }
 
-        public static void InsertList<W, X, Y>(List<Tuple<W, X, Y>> ts, string ins1, string ins2, string ins3, string cmd)
+        public static void Insert<W, X, Y>(List<Tuple<W, X, Y>> ts, string ins1, string ins2, string ins3, string cmd)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace Code
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"{DateTime.Now}\tCaught exception {ex.Message} while performing:\n{cmd}".Pastel("#FF0000"));
             }
             finally
             {
@@ -87,7 +87,7 @@ namespace Code
             }
         }
 
-        public static void InsertList<W, X>(List<Tuple<W, X>> ts, string ins1, string ins2, string cmd)
+        public static void Insert<W, X>(List<Tuple<W, X>> ts, string ins1, string ins2, string cmd)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace Code
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"{DateTime.Now}\tCaught exception {ex.Message} while performing:\n{cmd}".Pastel("#FF0000"));
             }
             finally
             {
@@ -112,7 +112,7 @@ namespace Code
             }
         }
 
-        public static void InsertList<W>(List<Tuple<W>> ts, string ins1, string cmd)
+        public static void Insert<W>(List<Tuple<W>> ts, string ins1, string cmd)
         {
             try
             {
@@ -128,7 +128,7 @@ namespace Code
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"{DateTime.Now}\tCaught exception {ex.Message} while performing:\n{cmd}".Pastel("#FF0000"));
             }
             finally
             {
@@ -136,7 +136,7 @@ namespace Code
             }
         }
 
-        public static List<Tuple<W, X, Y, Z>> ReadTable<W, X, Y, Z>(string cmd)
+        public static List<Tuple<W, X, Y, Z>> Read<W, X, Y, Z>(string cmd)
         {
             var Data = new List<Tuple<W, X, Y, Z>>();
             try
@@ -154,11 +154,18 @@ namespace Code
                     }
                 }
             }
-            finally { conn.Close(); }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{DateTime.Now}\tCaught exception {ex.Message} while performing:\n{cmd}".Pastel("#FF0000"));
+            }
+            finally
+            {
+                conn.Close();
+            }
             return Data;
         }
 
-        public static List<Tuple<W, X, Y>> ReadTable<W, X, Y>(string cmd)
+        public static List<Tuple<W, X, Y>> Read<W, X, Y>(string cmd)
         {
             var Data = new List<Tuple<W, X, Y>>();
             try
@@ -176,6 +183,10 @@ namespace Code
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{DateTime.Now}\tCaught exception {ex.Message} while performing:\n{cmd}".Pastel("#FF0000"));
+            }
             finally
             {
                 conn.Close();
@@ -183,7 +194,7 @@ namespace Code
             return Data;
         }
 
-        public static List<Tuple<W, X>> ReadTable<W, X>(string cmd)
+        public static List<Tuple<W, X>> Read<W, X>(string cmd)
         {
             var Data = new List<Tuple<W, X>>();
             try
@@ -201,6 +212,10 @@ namespace Code
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{DateTime.Now}\tCaught exception {ex.Message} while performing:\n{cmd}".Pastel("#FF0000"));
+            }
             finally
             {
                 conn.Close();
@@ -208,7 +223,7 @@ namespace Code
             return Data;
         }
 
-        public static List<Tuple<W>> ReadTable<W>(string cmd)
+        public static List<Tuple<W>> Read<W>(string cmd)
         {
             var Data = new List<Tuple<W>>();
             try
@@ -225,6 +240,10 @@ namespace Code
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{DateTime.Now}\tCaught exception {ex.Message} while performing:\n{cmd}".Pastel("#FF0000"));
             }
             finally
             {

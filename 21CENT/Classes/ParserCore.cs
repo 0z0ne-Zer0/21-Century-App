@@ -16,14 +16,14 @@ namespace Code
                 using (var doc = await context.OpenAsync(url)) //Open URL
                 {
                     var list = doc.GetElementsByClassName("result__root"); //Parse for needed content
-                    foreach (var item in list)
+                    Parallel.ForEach(list, item =>
                     {
                         var str = item.Children[1].GetAttribute("href") + "?print"; //Get versions for print
                         if (!result.Contains(new Tuple<string>(str))) //Eliminate copies
                             result.Add(new Tuple<string>(str));
                         else
                             return;
-                    }
+                    });
                 }
             }
         }
@@ -39,17 +39,17 @@ namespace Code
                 {
                     //Console.WriteLine("parsing: " + url);
                     var list = doc.GetElementsByTagName("dt"); //Parse for <dt> tags
-                    foreach (var I in list)
+                    Parallel.ForEach(list, I =>
                     {
                         var item = I.Children[0];
                         if (item.InnerHtml.Contains("span")) //Sorting out garbage
-                            continue;
+                            return;
                         var link = item.GetAttribute("href");
                         if (String.IsNullOrEmpty(link) || link.Split("/").Length > 5) //Sorting out garbage (second time)
-                            continue;
+                            return;
                         var key = item.TextContent;
                         result.Add(new Tuple<string, string>(key, link));
-                    }
+                    });
                 }
             }
             //Console.WriteLine(url + " ended at " + DateTime.Now);
