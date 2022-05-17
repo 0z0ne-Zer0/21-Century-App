@@ -1,22 +1,21 @@
-﻿using System.Linq;
-using System.Data.SQLite;
+﻿using System.Data.SQLite;
 using Pastel;
 
 namespace Code
 {
-    internal class SQLWorker
+    internal class SQLiteWorker
     {
-        private static string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + @"\Resources\Database.sqlite";
+        private static string path = $@"{Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName}\Resources\Database.sqlite"; //Windows
 
-        //private static string path = Directory.GetCurrentDirectory() + @"/Resources/Database.sqlite";
+        //private static string path = $@"{Directory.GetCurrentDirectory()}/Resources/Database.sqlite"; //Linux
         private static SQLiteConnection conn = new($"Data Source={path};Version=3;");
 
         public static void Create()
         {
             SQLiteConnection.CreateFile(path);
-            string[] cmd = {"CREATE TABLE maincat (MCID INTEGER PRIMARY KEY ASC, Name TEXT, URL TEXT)",
-            "CREATE TABLE subcat (SCID INTEGER PRIMARY KEY ASC, Name TEXT, URL TEXT, Pages INTEGER, MCID INTEGER)",
-            "CREATE TABLE goods (GID INTEGER PRIMARY KEY ASC, Name TEXT, URL TEXT, SCID INTEGER)"};
+            string[] cmd = {"CREATE TABLE \"maincat\" (\"MCID\"  INTEGER UNIQUE, \"Name\"  TEXT, \"URL\" TEXT, PRIMARY KEY(\"MCID\" ASC))",
+                "CREATE TABLE \"subcat\" (\"SCID\" INTEGER UNIQUE,\"Name\"  TEXT,\"URL\" TEXT UNIQUE, \"Pages\" INTEGER,\"MCID\"  INTEGER, PRIMARY KEY(\"SCID\" ASC),FOREIGN KEY(\"MCID\") REFERENCES \"maincat\"(\"MCID\"));",
+                "CREATE TABLE \"goods\" (\"GID\" INTEGER UNIQUE, \"Name\"  TEXT, \"URL\" TEXT UNIQUE, \"SCID\" INTEGER, PRIMARY KEY(\"GID\" ASC), FOREIGN KEY(\"SCID\") REFERENCES \"subcat\"(\"SCID\"));"};
             foreach (string arg in cmd)
             {
                 try
