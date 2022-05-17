@@ -5,7 +5,6 @@ namespace Code
     internal class ParseLibs
     {
         private static List<Tuple<string>> baseCat;
-
         private static object syncObject;
 
         public ParseLibs()
@@ -64,12 +63,12 @@ namespace Code
             return task.Result;
         }
 
-        public void CatalogParser(List<Tuple<string, int>> subCat) //Catalog subset parse
+        public void CatalogParser(List<Tuple<string, long>> subCat) //Catalog subset parse
         {
             var tasks = new List<Task>();
-            List<List<Tuple<string>>> goods = new List<List<Tuple<string>>>();
+            List<List<Tuple<string, string>>> goods = new List<List<Tuple<string, string>>>();
             for (int i = 0; i < subCat.Count; i++)
-                goods[i] = new List<Tuple<string>>();
+                goods[i] = new List<Tuple<string, string>>();
             for (int i = 0; i < subCat.Count; i++)
             {
                 tasks.Clear();
@@ -77,6 +76,10 @@ namespace Code
                 for (int j = 1; j <= subCat[i].Item2; j++)
                     tasks.Add(ParserCore.CatalogGet($"{subCat[i].Item1}page:{j}", goods[i]));
                 Task.WaitAll(tasks.ToArray());
+            }
+            for (int i = 0; i < goods.Count; i++)
+            {
+                SQLWorker.Insert<string, string>(goods[i], "@Name", "@URL", $"INSERT OR UPDATE INTO goods (Name, URL, SCID) VALUES(@NAME, @URL, {i})");
             }
         }
     }
