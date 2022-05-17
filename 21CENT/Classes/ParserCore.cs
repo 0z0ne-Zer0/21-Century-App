@@ -53,7 +53,7 @@ namespace Code
             return pageAMT;
         }
         
-        public static async Task CatalogGet(string url, List<Tuple<string>> result) //Catalog parser
+        public static async Task CatalogGet(string url, List<Tuple<string, string>> result) //Catalog parser
         {
             var config = Configuration.Default.WithDefaultLoader();
             using (var context = BrowsingContext.New(config))
@@ -64,9 +64,15 @@ namespace Code
                     var list = doc.GetElementsByClassName("result__root"); //Parse for needed content
                     Parallel.ForEach(list, item =>
                     {
-                        var str = item.Children[1].GetAttribute("href") + "?print"; //Get versions for print
-                        if (!result.Contains(new Tuple<string>(str))) //Eliminate copies
-                            result.Add(new Tuple<string>(str));
+                        string str = item.Children[1].GetAttribute("href") + "?print", name; //Get versions for print
+                        Thread.Sleep(rn.Next(1000)); //Wait to bypass protection
+                        using (var page = await context.OpenAsync(str)) //Open URL
+                        {
+                            var lst = page.GetElementsByClassName("content__header");
+                            name = lst[0].TextContent;
+                        }
+                        if (!result.Contains(new Tuple<string, string>(str, name))) //Eliminate copies
+                            result.Add(new Tuple<string, string>(str, name));
                         else
                             return;
                     });

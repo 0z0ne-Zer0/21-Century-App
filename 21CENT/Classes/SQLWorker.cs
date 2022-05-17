@@ -6,7 +6,8 @@ namespace Code
 {
     internal class SQLWorker
     {
-        private static string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + @"\Resources\Database.sqlite";
+        //private static string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + @"\Resources\Database.sqlite";
+        private static string path = Directory.GetCurrentDirectory() + @"/Resources/Database.sqlite";
         private static SQLiteConnection conn = new($"Data Source={path};Version=3;");
 
         public static void Create()
