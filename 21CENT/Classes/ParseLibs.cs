@@ -18,9 +18,7 @@ namespace Code
             var tasks = new List<Task>();
             for (int i = 0; i < baseCat.Count; i++)
                 subCat.Add(new List<Tuple<string, string>>());
-            for (int i = 0; i < baseCat.Count; i++)
-                tasks.Add(ParserCore.CategoryGet(baseCat[i].Item1, subCat[i]));
-            Task.WaitAll(tasks.ToArray());
+            Parallel.For(0, subCat.Count, i => ParserCore.CategoryGet(baseCat[i].Item1, subCat[i]));
             for (int i = 0; i < baseCat.Count; i++)
                 SQLWorker.Insert<string, string>(subCat[i], "Name", "URL", $"INSERT OR IGNORE INTO subcat (Name, URL, MCID) VALUES(@Name, @URL, {i + 1})");
         }
@@ -32,55 +30,35 @@ namespace Code
             int[] vs = new int[subCat.Count];
             Parallel.For(0, subCat.Count, i =>
              {
-                 vs[i] = PageParserAux(subCat[i], ID);
+                 vs[i] = ParserCore.PageCountGet(subCat[i].Item1);
              });
             for (int i = 0; i < subCat.Count; i++)
                 res.Add(Tuple.Create(vs[i], subCat[i].Item1));
-            try
-            {
-                Monitor.Enter(syncObject);
-                SQLWorker.Insert<int, string>(res, "Pages", "URL", $"UPDATE subcat SET Pages=@Pages WHERE URL=@URL");
-                Console.WriteLine($"{DateTime.Now}\tPages for {baseCat[ID]} counted.".Pastel("#00FF00"));
-            }
-            finally
-            {
-                Monitor.Exit(syncObject);
-            }
+            Console.WriteLine("asd");
+            //try
+            //{
+            //    Monitor.Enter(syncObject);
+            //    SQLWorker.Insert<int, string>(res, "Pages", "URL", $"UPDATE subcat SET Pages=@Pages WHERE URL=@URL");
+            //    Console.WriteLine($"{DateTime.Now}\tPages for {baseCat[ID]} counted.".Pastel("#00FF00"));
+            //}
+            //finally
+            //{
+            //    Monitor.Exit(syncObject);
+            //}
         }
 
-        private int PageParserAux(Tuple<string> subCat, int ID) //Page counting for URL subset
+        public void CatalogParser(List<Tuple<string, long, long>> subCat) //Catalog subset parse
         {
-            Task<int> task = null;
-            try
+            List<Tuple<string, string, long>> goods = new List<Tuple<string, string, long>>();
+            Parallel.ForEach(subCat, cat =>
             {
-                task = Task.Run(() => ParserCore.PageCountGet(subCat.Item1));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"{DateTime.Now}. Thread ID{ID}: {ex.Message}.\nAttempting restart".Pastel("#FF0000"));
-                PageParserAux(subCat, ID);
-            }
-            return task.Result;
-        }
-
-        public void CatalogParser(List<Tuple<string, long>> subCat) //Catalog subset parse
-        {
-            var tasks = new List<Task>();
-            List<List<Tuple<string, string>>> goods = new List<List<Tuple<string, string>>>();
-            for (int i = 0; i < subCat.Count; i++)
-                goods[i] = new List<Tuple<string, string>>();
-            for (int i = 0; i < subCat.Count; i++)
-            {
-                tasks.Clear();
-                Console.WriteLine($"{DateTime.Now}\tOPID{i + 1}.\tStarting parsing {subCat[i].Item1} now".Pastel("#FFFF00"));
-                for (int j = 1; j <= subCat[i].Item2; j++)
-                    tasks.Add(ParserCore.CatalogGet($"{subCat[i].Item1}page:{j}", goods[i]));
+                var tasks = new List<Task>();
+                Console.WriteLine($"{DateTime.Now}\tStarting parsing {cat.Item1} now".Pastel("#FFFF00"));
+                for (int j = 1; j <= cat.Item2; j++)
+                    tasks.Add(ParserCore.CatalogGet($"{cat.Item1}page:{j}", cat.Item3, goods));
                 Task.WaitAll(tasks.ToArray());
-            }
-            for (int i = 0; i < goods.Count; i++)
-            {
-                SQLWorker.Insert<string, string>(goods[i], "@Name", "@URL", $"INSERT OR UPDATE INTO goods (Name, URL, SCID) VALUES(@NAME, @URL, {i})");
-            }
+            });
+            SQLWorker.Insert<string, string, long>(goods, "Name", "URL", "SCID", $"INSERT OR IGNORE INTO goods (Name, URL, SCID) VALUES(@NAME, @URL, @SCID)");
         }
     }
 }
