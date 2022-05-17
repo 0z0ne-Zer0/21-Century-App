@@ -23,7 +23,7 @@ namespace Code
                 tasks.Add(ParserCore.CategoryGet(baseCat[i].Item1, subCat[i]));
             Task.WaitAll(tasks.ToArray());
             for (int i = 0; i < baseCat.Count; i++)
-                SQLWorker.Insert<string, string>(subCat[i], "Name", "URL", $"INSERT OR IGNORE INTO subcat (Name, URL, MCID) VALUES(?,?,{i + 1})");
+                SQLWorker.Insert<string, string>(subCat[i], "Name", "URL", $"INSERT OR IGNORE INTO subcat (Name, URL, MCID) VALUES(@Name, @URL, {i + 1})");
         }
 
         public void PageParser(List<Tuple<string>> subCat, int ID)

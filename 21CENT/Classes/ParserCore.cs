@@ -7,27 +7,6 @@ namespace Code
     {
         private static Random rn = new Random(DateTime.Now.Second);
 
-        public static async Task CatalogGet(string url, List<Tuple<string>> result) //Catalog parser
-        {
-            var config = Configuration.Default.WithDefaultLoader();
-            using (var context = BrowsingContext.New(config))
-            {
-                Thread.Sleep(rn.Next(1000)); //Wait to bypass protection
-                using (var doc = await context.OpenAsync(url)) //Open URL
-                {
-                    var list = doc.GetElementsByClassName("result__root"); //Parse for needed content
-                    Parallel.ForEach(list, item =>
-                    {
-                        var str = item.Children[1].GetAttribute("href") + "?print"; //Get versions for print
-                        if (!result.Contains(new Tuple<string>(str))) //Eliminate copies
-                            result.Add(new Tuple<string>(str));
-                        else
-                            return;
-                    });
-                }
-            }
-        }
-
         public static async Task CategoryGet(string url, List<Tuple<string, string>> result) //Gets categories from section index
         {
             //Console.WriteLine(url + " started at " + DateTime.Now);
@@ -72,6 +51,27 @@ namespace Code
                 }
             }
             return pageAMT;
+        }
+        
+        public static async Task CatalogGet(string url, List<Tuple<string>> result) //Catalog parser
+        {
+            var config = Configuration.Default.WithDefaultLoader();
+            using (var context = BrowsingContext.New(config))
+            {
+                Thread.Sleep(rn.Next(1000)); //Wait to bypass protection
+                using (var doc = await context.OpenAsync(url)) //Open URL
+                {
+                    var list = doc.GetElementsByClassName("result__root"); //Parse for needed content
+                    Parallel.ForEach(list, item =>
+                    {
+                        var str = item.Children[1].GetAttribute("href") + "?print"; //Get versions for print
+                        if (!result.Contains(new Tuple<string>(str))) //Eliminate copies
+                            result.Add(new Tuple<string>(str));
+                        else
+                            return;
+                    });
+                }
+            }
         }
     }
 }
