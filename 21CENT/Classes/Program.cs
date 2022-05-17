@@ -13,7 +13,7 @@ namespace Code
             libs.CategoryParser(new List<List<Tuple<string, string>>>(18));
             List<List<Tuple<string>>> res = new List<List<Tuple<string>>>();
             for (int i = 1; i <= 18; i++)
-                res.Add(SQLiteWorker.Read<string>($"SELECT URL FROM subcat WHERE MCID={i}"));
+                res.Add(SQLWorker.Read<string>($"SELECT URL FROM subcat WHERE MCID={i}"));
             Parallel.For(0, 18, i =>
             {
                 var cur = i;

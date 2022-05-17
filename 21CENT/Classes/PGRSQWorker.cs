@@ -1,3 +1,4 @@
+using System.Linq;
 using Npgsql;
 using Pastel;
 
@@ -43,7 +44,8 @@ namespace Code
                     using (var sql = new NpgsqlCommand(cmd, conn))
                     {
                         sql.Parameters.AddWithValue($"@{ins1}", item.Item1);
-
+                        
+                        sql.Parameters.AddWithValue($"@{ins1}", item.Item1);
                         sql.Parameters.AddWithValue($"@{ins2}", item.Item2);
                         sql.Parameters.AddWithValue($"@{ins3}", item.Item3);
                         sql.Parameters.AddWithValue($"@{ins4}", item.Item4);
