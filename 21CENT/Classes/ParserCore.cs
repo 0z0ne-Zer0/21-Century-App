@@ -40,7 +40,7 @@ namespace Code
             return pageAMT;
         }
 
-        public static async Task CatalogGet(string url, long ID, List<Tuple<string, string, long>> result) //Catalog parser
+        public static void CatalogGet(string url, long ID, List<Tuple<string, string, long>> result) //Catalog parser
         {
             WebPage webPage = new WebPage(url);
             webPage.Load().Wait();

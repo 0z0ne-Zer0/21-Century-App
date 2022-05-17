@@ -1,28 +1,24 @@
-﻿using System.Linq;
-using System.Data.SQLite;
+using System.Linq;
+using Npgsql;
 using Pastel;
 
 namespace Code
 {
-    internal class SQLWorker
+    internal class NPGSQLWorker
     {
-        private static string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + @"\Resources\Database.sqlite";
-
-        //private static string path = Directory.GetCurrentDirectory() + @"/Resources/Database.sqlite";
-        private static SQLiteConnection conn = new($"Data Source={path};Version=3;");
+        private static NpgsqlConnection conn = new NpgsqlConnection("Server=127.0.0.1;Port=5432;User Id=def;Password=mypass;Database=mydb;");
 
         public static void Create()
         {
-            SQLiteConnection.CreateFile(path);
-            string[] cmd = {"CREATE TABLE maincat (MCID INTEGER PRIMARY KEY ASC, Name TEXT, URL TEXT)",
-            "CREATE TABLE subcat (SCID INTEGER PRIMARY KEY ASC, Name TEXT, URL TEXT, Pages INTEGER, MCID INTEGER)",
-            "CREATE TABLE goods (GID INTEGER PRIMARY KEY ASC, Name TEXT, URL TEXT, SCID INTEGER)"};
+            string[] cmd = {"CREATE TABLE maincat (MCID INTEGER PRIMARY KEY, Name TEXT, URL TEXT)",
+            "CREATE TABLE subcat (SCID INTEGER PRIMARY KEY, Name TEXT, URL TEXT, Pages INTEGER, MCID INTEGER)",
+            "CREATE TABLE goods (GID INTEGER PRIMARY KEY, Name TEXT, URL TEXT, SCID INTEGER)"};
             foreach (string arg in cmd)
             {
                 try
                 {
                     conn.Open();
-                    SQLiteCommand command = new SQLiteCommand(arg, conn);
+                    NpgsqlCommand command = new NpgsqlCommand(arg, conn);
                     command.ExecuteNonQuery();
                 }
                 catch (Exception ex)
@@ -43,8 +39,9 @@ namespace Code
                 conn.Open();
                 foreach (var item in ts)
                 {
-                    using (var sql = new SQLiteCommand(cmd, conn))
+                    using (var sql = new NpgsqlCommand(cmd, conn))
                     {
+                        
                         sql.Parameters.AddWithValue($"@{ins1}", item.Item1);
                         sql.Parameters.AddWithValue($"@{ins2}", item.Item2);
                         sql.Parameters.AddWithValue($"@{ins3}", item.Item3);
@@ -70,7 +67,7 @@ namespace Code
                 conn.Open();
                 foreach (var item in ts)
                 {
-                    using (var sql = new SQLiteCommand(cmd, conn))
+                    using (var sql = new NpgsqlCommand(cmd, conn))
                     {
                         sql.Parameters.AddWithValue($"@{ins1}", item.Item1);
                         sql.Parameters.AddWithValue($"@{ins2}", item.Item2);
@@ -96,7 +93,7 @@ namespace Code
                 conn.Open();
                 foreach (var item in ts)
                 {
-                    using (var sql = new SQLiteCommand(cmd, conn))
+                    using (var sql = new NpgsqlCommand(cmd, conn))
                     {
                         sql.Parameters.AddWithValue($"@{ins1}", item.Item1);
                         sql.Parameters.AddWithValue($"@{ins2}", item.Item2);
@@ -121,7 +118,7 @@ namespace Code
                 conn.Open();
                 foreach (var item in ts)
                 {
-                    using (var sql = new SQLiteCommand(cmd, conn))
+                    using (var sql = new NpgsqlCommand(cmd, conn))
                     {
                         sql.Parameters.AddWithValue($"@{ins1}", item.Item1);
                         sql.ExecuteNonQuery();
@@ -144,16 +141,15 @@ namespace Code
             try
             {
                 conn.Open();
-                using (SQLiteCommand command = new SQLiteCommand(cmd, conn))
+                using (NpgsqlCommand command = new NpgsqlCommand(cmd, conn))
                 {
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    NpgsqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            object tmp1 = reader.GetValue(0), tmp2 = reader.GetValue(1), tmp3 = reader.GetValue(2), tmp4 = reader.GetValue(3);
-                            Data.Add(Tuple.Create((W)tmp1, (X)tmp2, (Y)tmp3, (Z)tmp4));
-                        }
+                        object tmp1 = reader.GetValue(0), tmp2 = reader.GetValue(1), tmp3 = reader.GetValue(2), tmp4 = reader.GetValue(3);
+                        Data.Add(Tuple.Create((W)tmp1, (X)tmp2, (Y)tmp3, (Z)tmp4));
                     }
+                    
                 }
             }
             catch (Exception ex)
@@ -173,9 +169,9 @@ namespace Code
             try
             {
                 conn.Open();
-                using (SQLiteCommand command = new SQLiteCommand(cmd, conn))
+                using (NpgsqlCommand command = new NpgsqlCommand(cmd, conn))
                 {
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    using (NpgsqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -202,9 +198,9 @@ namespace Code
             try
             {
                 conn.Open();
-                using (SQLiteCommand command = new SQLiteCommand(cmd, conn))
+                using (NpgsqlCommand command = new NpgsqlCommand(cmd, conn))
                 {
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    using (NpgsqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -231,9 +227,9 @@ namespace Code
             try
             {
                 conn.Open();
-                using (SQLiteCommand command = new SQLiteCommand(cmd, conn))
+                using (NpgsqlCommand command = new NpgsqlCommand(cmd, conn))
                 {
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    using (NpgsqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
