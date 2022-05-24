@@ -5,9 +5,9 @@ namespace Code
 {
     internal class SQLiteWorker
     {
-        private static string path = $@"{Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName}\Resources\Database.sqlite"; //Windows
+        //private static string path = $@"{Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName}\Resources\Database.sqlite"; //Windows
 
-        //private static string path = $@"{Directory.GetCurrentDirectory()}/Resources/Database.sqlite"; //Linux
+        private static string path = $@"{Directory.GetCurrentDirectory()}/Resources/Database.sqlite"; //Linux
         private static SQLiteConnection conn = new($"Data Source={path};Version=3;");
 
         public static void Create()

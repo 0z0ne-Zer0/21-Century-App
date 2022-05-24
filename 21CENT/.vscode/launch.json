@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/21CENT/bin/Debug/net6.0/HTMLScrapper.dll",
+            "program": "${workspaceFolder}/bin/Debug/net6.0/HTMLScrapper.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/21CENT",
+            "cwd": "${workspaceFolder}/",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false

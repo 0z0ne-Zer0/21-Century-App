@@ -9,7 +9,7 @@ namespace Code
 
         public ParseLibs()
         {
-            baseCat = SQLiteWorker.Read<string>("SELECT URL FROM maincat");
+            baseCat = PGRSQLWorker.Read<string>("SELECT URL FROM maincat");
             syncObject = new object();
         }
 
@@ -20,7 +20,7 @@ namespace Code
                 subCat.Add(new List<Tuple<string, string>>());
             Parallel.For(0, subCat.Count, i => ParserCore.CategoryGet(baseCat[i].Item1, subCat[i]));
             for (int i = 0; i < baseCat.Count; i++)
-                SQLiteWorker.Insert<string, string>(subCat[i], "Name", "URL", $"INSERT OR IGNORE INTO subcat (Name, URL, MCID) VALUES(@Name, @URL, {i + 1})");
+                PGRSQLWorker.Insert<string, string>(subCat[i], "Name", "URL", $"INSERT OR IGNORE INTO subcat (Name, URL, MCID) VALUES(@Name, @URL, {i + 1})");
         }
 
         public void PageParser(List<Tuple<string>> subCat, int ID)
@@ -38,7 +38,7 @@ namespace Code
             try
             {
                 Monitor.Enter(syncObject);
-                SQLiteWorker.Insert<int, string>(res, "Pages", "URL", $"UPDATE subcat SET Pages=@Pages WHERE URL=@URL");
+                PGRSQLWorker.Insert<int, string>(res, "Pages", "URL", $"UPDATE subcat SET Pages=@Pages WHERE URL=@URL");
                 Console.WriteLine($"{DateTime.Now}\tPages for {baseCat[ID]} counted.".Pastel("#00FF00"));
             }
             finally
@@ -55,7 +55,7 @@ namespace Code
                 Console.WriteLine($"{DateTime.Now}\tStarting parsing {cat.Item1} now".Pastel("#FFFF00"));
                 Parallel.For(0, cat.Item2, i => ParserCore.CatalogGet($"{cat.Item1}page:{i+1}", cat.Item3, goods));
             });
-            SQLiteWorker.Insert<string, string, long>(goods, "Name", "URL", "SCID", $"INSERT OR IGNORE INTO goods (Name, URL, SCID) VALUES(@NAME, @URL, @SCID)");
+            PGRSQLWorker.Insert<string, string, long>(goods, "Name", "URL", "SCID", $"INSERT OR IGNORE INTO goods (Name, URL, SCID) VALUES(@NAME, @URL, @SCID)");
         }
     }
 }

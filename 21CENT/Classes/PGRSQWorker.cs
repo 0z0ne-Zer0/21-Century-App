@@ -1,4 +1,3 @@
-using System.Linq;
 using Npgsql;
 using Pastel;
 
@@ -6,7 +5,7 @@ using Pastel;
 
 namespace Code
 {
-    internal class NPGSQLWorker
+    internal class PGRSQLWorker
     {
         private static NpgsqlConnection conn = new NpgsqlConnection("Server=127.0.0.1;Port=5432;User Id=def;Password=mypass;Database=mydb;");
 
