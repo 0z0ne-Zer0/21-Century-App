@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UI.Models;
+using Xamarin.Essentials;
 
 namespace UI.Services
 {
     public class MockDataStore : IDataStore<Item>
     {
         private readonly List<Item> items;
+        private readonly PGRSQLWorker worker;
 
         public MockDataStore()
         {
-            var temp = PGRSQLWorker.Read<long, string, string>("SELECT scid,name,url FROM subcat");
+            worker = new PGRSQLWorker(IP: SecureStorage.GetAsync("IPAdr").Result);
+            var temp = worker.Read<int, string, string>("SELECT scid,name,url FROM subcat");
             foreach (var item in temp)
-                items.Add(new Item { Id = item.Item1.ToString(), Name = item.Item2, URL = item.Item3 });
+                items.Add(new Item { Id = item.Item1.ToString(), Name = item.Item2, Description = item.Item3 });
         }
 
         public async Task<bool> AddItemAsync(Item item)

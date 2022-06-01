@@ -45,6 +45,11 @@
                         Command="{Binding OpenWebCommand}"
                         BackgroundColor="{StaticResource Primary}"
                         TextColor="White" />
+                <Entry Placeholder="IP" x:Name="IP" />
+                <Button Margin="0,10,0,0" Text="Set server IP"
+                        Clicked="Button_Clicked"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
             </StackLayout>
         </ScrollView>
     </Grid>

@@ -44,7 +44,7 @@ namespace UI.ViewModels
                 var item = await DataStore.GetItemAsync(itemId);
                 Id = item.Id;
                 Text = item.Name;
-                Description = item.URL;
+                Description = item.Description;
             }
             catch (Exception)
             {

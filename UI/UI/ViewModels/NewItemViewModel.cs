@@ -50,7 +50,7 @@ namespace UI.ViewModels
             {
                 Id = Guid.NewGuid().ToString(),
                 Name = Text,
-                URL = Description
+                Description = Description
             };
 
             await DataStore.AddItemAsync(newItem);
