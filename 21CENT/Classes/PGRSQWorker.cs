@@ -7,9 +7,14 @@ namespace Code
 {
     internal class PGRSQLWorker
     {
-        private static NpgsqlConnection conn = new NpgsqlConnection("Server=127.0.0.1;Port=5432;User Id=def;Password=mypass;Database=mydb;");
+        private NpgsqlConnection conn;
 
-        public static void Create()
+        public PGRSQLWorker(string IP = "localhost", string P = "5432", string U = "def", string PS = "mypass", string DBN = "mydb")
+        {
+            conn = new NpgsqlConnection($"Host={IP};Port={P};User Id={U};Password={PS};Database={DBN};");
+        }
+
+        public void Create()
         {
             string[] cmd = {"CREATE TABLE maincat (MCID INTEGER PRIMARY KEY, Name TEXT, URL TEXT)",
             "CREATE TABLE subcat (SCID INTEGER PRIMARY KEY, Name TEXT, URL TEXT, Pages INTEGER, MCID INTEGER)",
@@ -33,7 +38,7 @@ namespace Code
             }
         }
 
-        public static void Insert<W, X, Y, Z>(List<Tuple<W, X, Y, Z>> ts, string ins1, string ins2, string ins3, string ins4, string cmd)
+        public void Insert<W, X, Y, Z>(List<Tuple<W, X, Y, Z>> ts, string ins1, string ins2, string ins3, string ins4, string cmd)
         {
             try
             {
@@ -43,7 +48,7 @@ namespace Code
                     using (var sql = new NpgsqlCommand(cmd, conn))
                     {
                         sql.Parameters.AddWithValue($"@{ins1}", item.Item1);
-                        
+
                         sql.Parameters.AddWithValue($"@{ins1}", item.Item1);
                         sql.Parameters.AddWithValue($"@{ins2}", item.Item2);
                         sql.Parameters.AddWithValue($"@{ins3}", item.Item3);
@@ -62,7 +67,7 @@ namespace Code
             }
         }
 
-        public static void Insert<W, X, Y>(List<Tuple<W, X, Y>> ts, string ins1, string ins2, string ins3, string cmd)
+        public void Insert<W, X, Y>(List<Tuple<W, X, Y>> ts, string ins1, string ins2, string ins3, string cmd)
         {
             try
             {
@@ -88,7 +93,7 @@ namespace Code
             }
         }
 
-        public static void Insert<W, X>(List<Tuple<W, X>> ts, string ins1, string ins2, string cmd)
+        public void Insert<W, X>(List<Tuple<W, X>> ts, string ins1, string ins2, string cmd)
         {
             try
             {
@@ -113,7 +118,7 @@ namespace Code
             }
         }
 
-        public static void Insert<W>(List<Tuple<W>> ts, string ins1, string cmd)
+        public void Insert<W>(List<Tuple<W>> ts, string ins1, string cmd)
         {
             try
             {
@@ -137,7 +142,7 @@ namespace Code
             }
         }
 
-        public static List<Tuple<W, X, Y, Z>> Read<W, X, Y, Z>(string cmd)
+        public List<Tuple<W, X, Y, Z>> Read<W, X, Y, Z>(string cmd)
         {
             var Data = new List<Tuple<W, X, Y, Z>>();
             try
@@ -164,7 +169,7 @@ namespace Code
             return Data;
         }
 
-        public static List<Tuple<W, X, Y>> Read<W, X, Y>(string cmd)
+        public List<Tuple<W, X, Y>> Read<W, X, Y>(string cmd)
         {
             var Data = new List<Tuple<W, X, Y>>();
             try
@@ -193,7 +198,7 @@ namespace Code
             return Data;
         }
 
-        public static List<Tuple<W, X>> Read<W, X>(string cmd)
+        public List<Tuple<W, X>> Read<W, X>(string cmd)
         {
             var Data = new List<Tuple<W, X>>();
             try
@@ -222,7 +227,7 @@ namespace Code
             return Data;
         }
 
-        public static List<Tuple<W>> Read<W>(string cmd)
+        public List<Tuple<W>> Read<W>(string cmd)
         {
             var Data = new List<Tuple<W>>();
             try
