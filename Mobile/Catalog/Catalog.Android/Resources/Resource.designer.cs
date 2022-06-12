@@ -15552,7 +15552,7 @@ namespace Catalog.Droid
 			
 			// aapt resource value: 0x7F0600C9
 			public const int mtrl_badge_long_text_horizontal_padding = 2131099849;
-			
+		
 			// aapt resource value: 0x7F0600CA
 			public const int mtrl_badge_radius = 2131099850;
 			
@@ -15561,7 +15561,7 @@ namespace Catalog.Droid
 			
 			// aapt resource value: 0x7F0600CC
 			public const int mtrl_badge_text_size = 2131099852;
-		
+			
 			// aapt resource value: 0x7F0600CD
 			public const int mtrl_badge_toolbar_action_menu_item_horizontal_offset = 2131099853;
 			
