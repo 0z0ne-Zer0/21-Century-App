@@ -28,64 +28,70 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.id = new System.Windows.Forms.TextBox();
-            this.name = new System.Windows.Forms.TextBox();
-            this.link = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.Catalog = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // id
+            // Catalog
             // 
-            this.id.Location = new System.Drawing.Point(23, 27);
-            this.id.Name = "id";
-            this.id.Size = new System.Drawing.Size(125, 27);
-            this.id.TabIndex = 0;
+            this.Catalog.Location = new System.Drawing.Point(77, 227);
+            this.Catalog.Name = "Catalog";
+            this.Catalog.Size = new System.Drawing.Size(122, 46);
+            this.Catalog.TabIndex = 3;
+            this.Catalog.Text = "Catalog";
+            this.Catalog.UseVisualStyleBackColor = true;
+            this.Catalog.Click += new System.EventHandler(this.catalog_Click);
             // 
-            // name
+            // menuStrip1
             // 
-            this.name.Location = new System.Drawing.Point(23, 92);
-            this.name.Name = "name";
-            this.name.Size = new System.Drawing.Size(125, 27);
-            this.name.TabIndex = 1;
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem,
+            this.cartToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(272, 28);
+            this.menuStrip1.TabIndex = 4;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // link
+            // settingsToolStripMenuItem
             // 
-            this.link.Location = new System.Drawing.Point(23, 162);
-            this.link.Name = "link";
-            this.link.Size = new System.Drawing.Size(125, 27);
-            this.link.TabIndex = 2;
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(76, 24);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
-            // button1
+            // cartToolStripMenuItem
             // 
-            this.button1.Location = new System.Drawing.Point(23, 220);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(94, 29);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.cartToolStripMenuItem.Name = "cartToolStripMenuItem";
+            this.cartToolStripMenuItem.Size = new System.Drawing.Size(50, 24);
+            this.cartToolStripMenuItem.Text = "Cart";
+            this.cartToolStripMenuItem.Click += new System.EventHandler(this.cartToolStripMenuItem_Click);
             // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.link);
-            this.Controls.Add(this.name);
-            this.Controls.Add(this.id);
+            this.ClientSize = new System.Drawing.Size(272, 285);
+            this.Controls.Add(this.Catalog);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainPage";
-            this.Text = "Form1";
+            this.Text = "Main Page";
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private TextBox id;
-        private TextBox name;
-        private TextBox link;
-        private Button button1;
+        private Button Catalog;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem settingsToolStripMenuItem;
+        private ToolStripMenuItem cartToolStripMenuItem;
     }
 }

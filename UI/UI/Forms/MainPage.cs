@@ -9,10 +9,23 @@ namespace UI.Forms
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void catalog_Click(object sender, EventArgs e)
         {
-            using var db = new Services.DatabaseControl("192.168.0.110");
-            var temp = db.MainCats.Where(c => c.Id==int.Parse(this.id.Text)).ToList();
+            var open = new CategorySelect(this);
+            open.Show();
+            this.Hide();
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var open = new Settings();
+            open.Show();
+        }
+
+        private void cartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var open = new Cart();
+            open.Show();
         }
     }
 }

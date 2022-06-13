@@ -3,14 +3,13 @@ using UI.Models;
 
 namespace UI.Services
 {
-    public partial class DatabaseControl : DbContext
+    public partial class PostDatabaseControl : DbContext
     {
-        public DatabaseControl(string host)
+        public PostDatabaseControl()
         {
-            Host = host;
         }
 
-        public DatabaseControl(DbContextOptions<DatabaseControl> options)
+        public PostDatabaseControl(DbContextOptions<PostDatabaseControl> options)
             : base(options)
         {
         }
@@ -19,13 +18,13 @@ namespace UI.Services
         public virtual DbSet<MainCat> MainCats { get; set; } = null!;
         public virtual DbSet<SubCat> SubCats { get; set; } = null!;
 
-        public string Host { get; }
+        static public string Host { get; set; } = String.Empty;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("Host=192.168.0.110;Port=5432;Database=mydb;Username=def;Password=mypass");
+                optionsBuilder.UseNpgsql($"Host={Host};Port=5432;Database=mydb;Username=def;Password=mypass");
             }
         }
 
