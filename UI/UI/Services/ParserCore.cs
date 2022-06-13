@@ -4,9 +4,9 @@ namespace UI.Services
 {
     internal class ParserCore
     {
-        public static List<Models.SubWebPage> CategoryGet(Models.MainWebPage parrent) //Gets categories from section index
+        public static List<SubWebPage> CategoryGet(MainWebPage parrent) //Gets categories from section index
         {
-            List<Models.SubWebPage> result = new List<Models.SubWebPage>();
+            List<SubWebPage> result = new List<SubWebPage>();
             WebPage webPage = new WebPage(parrent.Link);
 
             Console.WriteLine("21Cent\t" + $"Debug: started parsing {parrent.Link}");
@@ -25,7 +25,7 @@ namespace UI.Services
             return result;
         }
 
-        public static int PageCountGet(Models.SubWebPage item) //Gets page count in given Catalog
+        public static int PageCountGet(SubWebPage item) //Gets page count in given Catalog
         {
             int pageAMT = 1;
             WebPage webPage = new WebPage(item.Link);
@@ -43,9 +43,9 @@ namespace UI.Services
             return pageAMT;
         }
 
-        public static List<Models.Item> CatalogGet(string url) //Catalog parser
+        public static List<CatalogItem> CatalogGet(string url) //Catalog parser
         {
-            List<Models.Item> result = new List<Models.Item>();
+            List<CatalogItem> result = new List<CatalogItem>();
             WebPage webPage = new WebPage(url);
 
             webPage.Load().Wait();
@@ -81,7 +81,7 @@ namespace UI.Services
                     }
                 }
                 Console.WriteLine("21Cent\t" + $"Loading {name} @ {link}");
-                result.Add(new Models.Item { Name = name, Link = link, IsInStock = stock, IsDiscount = discount, OldPrice = old, Price = cur }); //Adding item
+                result.Add(new Models.CatalogItem { Name = name, Link = link, IsInStock = stock, IsDiscount = discount, OldPrice = old, Price = cur }); //Adding item
             });
 
             return result;
