@@ -4,10 +4,10 @@ namespace UI.Services
 {
     internal class ParserCore
     {
-        public static List<SubWebPage> CategoryGet(MainWebPage parrent) //Gets categories from section index
+        public static List<SubCat> CategoryGet(MainCat parrent) //Gets categories from section index
         {
-            List<SubWebPage> result = new List<SubWebPage>();
-            WebPage webPage = new WebPage(parrent.Link);
+            List<SubCat> result = new();
+            WebPage webPage = new(parrent.Link);
 
             Console.WriteLine("21Cent\t" + $"Debug: started parsing {parrent.Link}");
 
@@ -17,7 +17,7 @@ namespace UI.Services
             {
                 var link = I.GetAttribute("href"); //Getting link
                 var title = I.TextContent; //Getting content title
-                result.Add(new Models.SubWebPage { Title = title, Link = link, PId = parrent.Id });
+                result.Add(new Models.SubCat { Title = title, Link = link, Pid = parrent.Id });
             });
 
             Console.WriteLine("21Cent\t" + $"Debug: Ended parsing {parrent.Link}");
@@ -25,10 +25,10 @@ namespace UI.Services
             return result;
         }
 
-        public static int PageCountGet(SubWebPage item) //Gets page count in given Catalog
+        public static int PageCountGet(SubCat item) //Gets page count in given Catalog
         {
             int pageAMT = 1;
-            WebPage webPage = new WebPage(item.Link);
+            WebPage webPage = new(item.Link);
 
             Console.WriteLine("21Cent\t" + $"Debug: page count of {item.Link}");
 
@@ -45,8 +45,8 @@ namespace UI.Services
 
         public static List<CatalogItem> CatalogGet(string url) //Catalog parser
         {
-            List<CatalogItem> result = new List<CatalogItem>();
-            WebPage webPage = new WebPage(url);
+            List<CatalogItem> result = new();
+            WebPage webPage = new(url);
 
             webPage.Load().Wait();
 
@@ -81,7 +81,7 @@ namespace UI.Services
                     }
                 }
                 Console.WriteLine("21Cent\t" + $"Loading {name} @ {link}");
-                result.Add(new Models.CatalogItem { Name = name, Link = link, IsInStock = stock, IsDiscount = discount, OldPrice = old, Price = cur }); //Adding item
+                result.Add(new Models.CatalogItem { Name = name, Link = link, Isinstock = stock, Isdiscount = discount, Oldprice = (float?)old, Price = (float?)cur }); //Adding item
             });
 
             return result;
