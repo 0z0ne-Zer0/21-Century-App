@@ -88,7 +88,14 @@
             var tmp = Services.ParserCore.CatalogGet(catalog.Link + $"page:{nextPage}");
             foreach (var item in tmp)
                 item.Psid = catalog.Sid;
-            await db.AddRangeAsync(tmp);
+            foreach(var item in tmp)
+            {
+                var T = db.CatalogItems.First(c => (c.Name == item.Name) && (c.Psid == catalog.Sid));
+                if (T != null)
+                    db.Update(item);
+                else
+                    db.Add(item);
+            }
             await db.SaveChangesAsync();
         }
 
