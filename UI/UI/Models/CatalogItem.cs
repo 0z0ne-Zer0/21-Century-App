@@ -5,7 +5,7 @@ namespace UI.Models
 {
     public partial class CatalogItem
     {
-        public int Id { get; set; }
+        public int Cid { get; set; }
         public string? Name { get; set; }
         public string? Link { get; set; }
         public bool? Isinstock { get; set; }
@@ -13,8 +13,8 @@ namespace UI.Models
         public float? Price { get; set; }
         public float? Oldprice { get; set; }
         public string? Props { get; set; }
-        public int? Pid { get; set; }
+        public int? Psid { get; set; }
 
-        public virtual SubCat? PidNavigation { get; set; }
+        public virtual SubCat? Ps { get; set; }
     }
 }

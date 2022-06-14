@@ -4,6 +4,7 @@
     {
         int parrentID;
         public Form parent { get;}
+        private Models.SubCat category { get; set;}
 
         public Catalog(int parrentID, Form parrent)
         {
@@ -27,7 +28,8 @@
         private void Catalog_Load(object sender, EventArgs e)
         {
             var db = new Services.PostDatabaseControl();
-            var maxPages = db.SubCats.First(c => c.Id == parrentID).Pages;
+            category = db.SubCats.First(c => c.Sid == parrentID);
+            var maxPages = category.Pages;
             pageCounter.Text = $"1/{maxPages}";
             LoadPage();
         }
@@ -35,7 +37,7 @@
         private void LoadPage()
         {
             var db = new Services.PostDatabaseControl();
-            var catalog = db.CatalogItems.Where(c => c.Pid == parrentID).ToList();
+            var catalog = db.CatalogItems.Where(c => c.Psid == parrentID).ToList();
             var curPage = int.Parse(pageCounter.Text.Split('/')[0]);
             for (int i = 0 + ((curPage - 1) * 60); i < 60 * curPage && i < catalog.Count; i++)
             {
@@ -76,20 +78,24 @@
 
         private void Catalog_FormClosing(object sender, FormClosingEventArgs e)=>parent.Show();
 
-        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private async void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             var db = new Services.PostDatabaseControl();
-            var catalog = db.SubCats.First(c => c.Id == parrentID);
+            var catalog = db.SubCats.First(c => c.Sid == parrentID);
             var nextPage = int.Parse(e.Argument.ToString());
             if (catalog.Pages < nextPage)
                 return;
             var tmp = Services.ParserCore.CatalogGet(catalog.Link + $"page:{nextPage}");
-            db.AddAsync(tmp);
-            db.SaveChangesAsync();
+            foreach (var item in tmp)
+                item.Psid = catalog.Sid;
+            await db.AddRangeAsync(tmp);
+            await db.SaveChangesAsync();
         }
 
         private void next_Click(object sender, EventArgs e)
         {
+            int max = int.Parse(pageCounter.Text.Split('/')[1]), cur = int.Parse(pageCounter.Text.Split('/')[0]);
+            pageCounter.Text = $"{cur + 1}/{max}";
             LoadPage();
         }
     }

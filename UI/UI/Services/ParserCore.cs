@@ -17,7 +17,7 @@ namespace UI.Services
             {
                 var link = I.GetAttribute("href"); //Getting link
                 var title = I.TextContent; //Getting content title
-                result.Add(new Models.SubCat { Title = title, Link = link, Pid = parrent.Id });
+                result.Add(new Models.SubCat { Title = title, Link = link, Pmid = parrent.Mid });
             });
 
             Console.WriteLine("21Cent\t" + $"Debug: Ended parsing {parrent.Link}");
@@ -43,6 +43,8 @@ namespace UI.Services
             return pageAMT;
         }
 
+
+
         public static List<CatalogItem> CatalogGet(string url) //Catalog parser
         {
             List<CatalogItem> result = new();
@@ -53,6 +55,15 @@ namespace UI.Services
             var list = webPage.QuerySelector("dt.result__root > a"); //Parse link + name
             Parallel.ForEach(list, item =>
             {
+                static string Cleaner(string deb) //Price string cleaner
+                {
+                    if (deb.Contains("р."))
+                        deb = deb.Remove(deb.Length - 2);
+                    deb = deb.Replace(",", ".");
+                    deb = deb.Replace(" ", "");
+                    return deb;
+                }
+
                 bool stock = false, discount = false;
                 string link = "", name = "";
                 double old = 0, cur = 0;
@@ -68,16 +79,18 @@ namespace UI.Services
                 {
                     stock = true;
                     lst = T.FindByClass("g-price");
-                    if (lst.Length > 2) //Get discount
+                    if (lst.Length == 2) //Get discount
                     {
                         discount = true;
-                        old = double.Parse(lst[0].TextContent.Split(' ')[0]); //Prices if discount==true
-                        cur = double.Parse(lst[1].TextContent);
+                        string deb1 = Cleaner(lst[0].TextContent.Split(' ')[0]), deb2 = Cleaner(lst[1].TextContent);
+                        old = double.Parse(deb1); //Prices if discount==true
+                        cur = double.Parse(deb2);
                     }
-                    else
+                    else if (lst.Length == 1)
                     {
                         discount = false;
-                        cur = double.Parse(lst[0].TextContent); //Prices if discount==false
+                        string deb = Cleaner(lst[0].TextContent);
+                        cur = double.Parse(deb); //Prices if discount==false
                     }
                 }
                 Console.WriteLine("21Cent\t" + $"Loading {name} @ {link}");

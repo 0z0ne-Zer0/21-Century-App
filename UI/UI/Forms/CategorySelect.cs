@@ -30,7 +30,7 @@
                 if (item.Nodes.Count > 0)
                     return;
                 var db = new Services.PostDatabaseControl();
-                var id = db.SubCats.Where(c => c.Title == item.Text).ToArray()[0].Id;
+                var id = db.SubCats.Where(c => c.Title == item.Text).ToArray()[0].Sid;
                 var open = new Catalog(id, this);
                 open.Show();
                 this.Hide();
@@ -49,7 +49,7 @@
                 if (item.Nodes.Count > 0)
                     return;
                 var db = new Services.PostDatabaseControl();
-                var id = db.SubCats.Where(c => c.Title == item.Text).ToArray()[0].Id;
+                var id = db.SubCats.Where(c => c.Title == item.Text).ToArray()[0].Sid;
                 var open = new Catalog(id, this);
                 open.Show();
                 this.Hide();
@@ -62,7 +62,7 @@
             var temp = db.MainCats.ToList();
             foreach (var item in temp)
             {
-                var _ = db.SubCats.Where(c=> c.Pid==item.Id).ToList();
+                var _ = db.SubCats.Where(c=> c.Pmid==item.Mid).ToList();
                 var children= new List<TreeNode>();
                 foreach (var child in _)
                 {
