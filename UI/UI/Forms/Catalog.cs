@@ -4,7 +4,7 @@
     {
         int parrentID;
         public Form parent { get;}
-        private Models.SubCat category { get; set;}
+        private Models.SubCat Category { get; set;}
 
         public Catalog(int parrentID, Form parrent)
         {
@@ -28,8 +28,8 @@
         private void Catalog_Load(object sender, EventArgs e)
         {
             var db = new Services.PostDatabaseControl();
-            category = db.SubCats.First(c => c.Sid == parrentID);
-            var maxPages = category.Pages;
+            Category = db.SubCats.First(c => c.Sid == parrentID);
+            var maxPages = Category.Pages;
             pageCounter.Text = $"1/{maxPages}";
             LoadPage();
         }
@@ -88,7 +88,14 @@
             var tmp = Services.ParserCore.CatalogGet(catalog.Link + $"page:{nextPage}");
             foreach (var item in tmp)
                 item.Psid = catalog.Sid;
-            await db.AddRangeAsync(tmp);
+            foreach(var item in tmp)
+            {
+                var T = db.CatalogItems.First(c => (c.Name == item.Name) && (c.Psid == catalog.Sid));
+                if (T != null)
+                    db.Update(item);
+                else
+                    db.Add(item);
+            }
             await db.SaveChangesAsync();
         }
 
