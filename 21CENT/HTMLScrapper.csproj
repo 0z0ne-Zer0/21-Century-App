@@ -8,9 +8,11 @@
 		<Configurations>Debug;Release;Debug UI</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="AngleSharp" Version="0.16.1" />
+		<PackageReference Include="AngleSharp" Version="0.17.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.5" />
 		<PackageReference Include="Pastel" Version="3.0.0" />
-		<PackageReference Include="Npgsql" Version="6.0.4" />
-		<PackageReference Include="System.Data.SQLite" Version="1.0.115.5" />
+		<PackageReference Include="Npgsql" Version="6.0.5" />
+		<PackageReference Include="System.Data.SQLite" Version="1.0.116" />
 	</ItemGroup>
 </Project>
