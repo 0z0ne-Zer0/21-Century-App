@@ -43,7 +43,8 @@
             {
                 Products.Rows.Add(catalog[i].Name, catalog[i].Isinstock, catalog[i].Isdiscount, catalog[i].Price, catalog[i].Oldprice);
             }
-            backgroundWorker1.RunWorkerAsync(curPage + 1);
+            if (catalog.Count <= curPage * 60)
+                backgroundWorker1.RunWorkerAsync(curPage + 1);
         }
 
         private void Products_KeyDown(object sender, KeyEventArgs e)
@@ -55,7 +56,7 @@
             if (item != null)
             {
                 var db = new Services.PostDatabaseControl();
-                MessageBox.Show("The selected Item Name is: " + item.Cells[1]);
+                //MessageBox.Show("The selected Item Name is: " + item.Cells[1]);
                 var T = db.CatalogItems.First(c => c.Name == item.Cells[0].Value);
                 var open = new Product(this, T);
                 open.Show();
@@ -73,14 +74,30 @@
             if (catalog.Pages < nextPage)
                 return;
             var tmp = Services.ParserCore.CatalogGet(catalog.Link + $"page:{nextPage}");
-            foreach (var item in tmp)
+            Parallel.ForEach(tmp, T =>
             {
-                item.Psid = catalog.Sid;
-                var T = db.CatalogItems.First(c => (c.Name == item.Name) && (c.Psid == catalog.Sid));
-                if (T != null)
-                    db.Update(item);
+                T.Psid = catalog.Sid;
+                var _ = Services.ParserCore.GetProperties(T.Link);
+                T.Props = _.Props;
+                T.Isinstock = _.Isinstock;
+                T.Isdiscount = _.Isdiscount;
+                T.Price = _.Price;
+                T.Oldprice = _.Oldprice;
+            });
+            foreach(var T in tmp)
+            {
+                var res = db.CatalogItems.FirstOrDefault(c => (c.Name == T.Name) && (c.Psid == catalog.Sid));
+                if (res != null)
+                {
+                    res.Props = T.Props;
+                    res.Price = T.Price;
+                    res.Oldprice = T.Oldprice;
+                    res.Isinstock = T.Isinstock;
+                    res.Isdiscount = T.Isdiscount;
+                    db.Update(res);
+                }
                 else
-                    db.Add(item);
+                    db.Add(T);
             }
             await db.SaveChangesAsync();
         }
@@ -101,7 +118,7 @@
             if (item != null)
             {
                 var db = new Services.PostDatabaseControl();
-                MessageBox.Show("The selected Item Name is: " + item.Cells[1]);
+                //MessageBox.Show("The selected Item Name is: " + item.Cells[1]);
                 var T = db.CatalogItems.First(c => c.Name == item.Cells[0].Value);
                 var open = new Product(this, T);
                 open.Show();
