@@ -1,6 +1,7 @@
 ﻿using _21CENT.Models;
 using Pastel;
 using System.Xml;
+using _21CENT.PostgreSQL;
 
 namespace _21CENT.Services
 {
@@ -54,7 +55,7 @@ namespace _21CENT.Services
             return deb;
         }
 
-        internal static Models.CatalogItem GetProperties(string url) //Returns properties (price, availiability, discount, other)
+        internal static CatalogItem GetProperties(string url) //Returns properties (price, availiability, discount, other)
         {
             float oldPrice = 0, curentPrice = 0;
             bool stock = false, discount = false;

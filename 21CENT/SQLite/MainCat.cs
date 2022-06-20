@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace _21CENT.Models
+namespace  _21CENT.SQlite
 {
     public partial class MainCat
     {
@@ -10,7 +10,7 @@ namespace _21CENT.Models
             SubCats = new HashSet<SubCat>();
         }
 
-        public int Mid { get; set; }
+        public long Mid { get; set; }
         public string? Name { get; set; }
         public string? Link { get; set; }
 

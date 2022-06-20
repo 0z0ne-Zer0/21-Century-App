@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using _21CENT.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace _21CENT.Services
+namespace _21CENT.PostgreSQL
 {
-    public partial class PostDatabaseControl : DbContext
+    public partial class DatabaseContext : DbContext
     {
-        public PostDatabaseControl()
+        public DatabaseContext()
         {
         }
 
-        public PostDatabaseControl(DbContextOptions<PostDatabaseControl> options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
         }
@@ -21,12 +17,12 @@ namespace _21CENT.Services
         public virtual DbSet<MainCat> MainCats { get; set; } = null!;
         public virtual DbSet<SubCat> SubCats { get; set; } = null!;
 
-        static public string Host { get; set; }
+        public static string? DataSource { get; set; } = null;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseNpgsql($"Host={Host};Port=5432;Database=mydb;Username=def;Password=mypass");
+                optionsBuilder.UseNpgsql($"Host={DataSource};Port=5432;Database=mydb;Username=def;Password=mypass");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
