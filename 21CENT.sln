@@ -7,9 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HTMLScrapper", "21CENT\HTML
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug UI|Any CPU = Debug UI|Any CPU
-		Debug UI|iPhone = Debug UI|iPhone
-		Debug UI|iPhoneSimulator = Debug UI|iPhoneSimulator
 		Debug|Any CPU = Debug|Any CPU
 		Debug|iPhone = Debug|iPhone
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -18,11 +15,6 @@ Global
 		Release|iPhoneSimulator = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BCEE22B4-935A-4FD1-A9A8-AD5D7F32028D}.Debug UI|Any CPU.ActiveCfg = Debug UI|Any CPU
-		{BCEE22B4-935A-4FD1-A9A8-AD5D7F32028D}.Debug UI|iPhone.ActiveCfg = Debug UI|Any CPU
-		{BCEE22B4-935A-4FD1-A9A8-AD5D7F32028D}.Debug UI|iPhone.Build.0 = Debug UI|Any CPU
-		{BCEE22B4-935A-4FD1-A9A8-AD5D7F32028D}.Debug UI|iPhoneSimulator.ActiveCfg = Debug UI|Any CPU
-		{BCEE22B4-935A-4FD1-A9A8-AD5D7F32028D}.Debug UI|iPhoneSimulator.Build.0 = Debug UI|Any CPU
 		{BCEE22B4-935A-4FD1-A9A8-AD5D7F32028D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BCEE22B4-935A-4FD1-A9A8-AD5D7F32028D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCEE22B4-935A-4FD1-A9A8-AD5D7F32028D}.Debug|iPhone.ActiveCfg = Debug|Any CPU

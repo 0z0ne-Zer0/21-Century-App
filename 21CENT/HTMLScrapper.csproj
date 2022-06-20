@@ -6,21 +6,14 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<Configurations>Debug;Release;Debug UI</Configurations>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<LangVersion>preview</LangVersion>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<LangVersion>preview</LangVersion>
+		<PlatformTarget>x64</PlatformTarget>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="AngleSharp" Version="0.17.1"/>
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6"/>
-		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.5"/>
-		<PackageReference Include="Pastel" Version="3.0.0"/>
-		<PackageReference Include="Npgsql" Version="6.0.5"/>
-		<PackageReference Include="System.Data.SQLite" Version="1.0.116"/>
-		<PackageReference Include="AngleSharp.XPath" Version="2.0.0"/>
-		<PackageReference Include="CefSharp.OffScreen.NETCore" Version="102.0.90"/>
+		<PackageReference Include="AngleSharp" Version="0.17.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.5" />
+		<PackageReference Include="Pastel" Version="3.0.0" />
+		<PackageReference Include="Npgsql" Version="6.0.5" />
+		<PackageReference Include="System.Data.SQLite" Version="1.0.116" />
 	</ItemGroup>
 </Project>
