@@ -49,7 +49,11 @@ namespace _21CENT.Classes
             var db = new PostDatabaseControl();
             PostDatabaseControl.Host = "localhost";
             Console.WriteLine($"{DateTime.Now}\tProgram start".Pastel("#00FF00"));
-            PropParse(db);
+            var test = db.CatalogItems.First().Link.Replace("?print", "");
+            var t = new Models.WebPage(test);
+            t.Load().Wait();
+            var xpath = """//*[@id="fotorama"]/div[1]/div/div[2]""";
+            var next = t.XPathSelector(xpath);
             Console.WriteLine($"{DateTime.Now}\tProgram end.".Pastel("#00FF00"));
         }
     }

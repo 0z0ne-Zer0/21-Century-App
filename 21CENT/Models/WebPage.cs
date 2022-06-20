@@ -1,12 +1,17 @@
 ﻿using AngleSharp;
 using AngleSharp.Dom;
+using AngleSharp.XPath;
+using CefSharp;
+using CefSharp.OffScreen;
 
 namespace _21CENT.Models
 {
     internal class WebPage
     {
-        private IDocument _ashDocument;
-        private readonly string _url;
+        IBrowsingContext context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
+        private IDocument _ashDocument{get; set;}
+        public string _url{get=>context.Active.Url; set=>Load().Wait();}
+        ChromiumWebBrowser browser = new ChromiumWebBrowser("www.google.com");
 
         public WebPage(string U)
         {
@@ -15,9 +20,11 @@ namespace _21CENT.Models
 
         public async Task Load()
         {
-            var config = Configuration.Default.WithDefaultLoader();
-            var context = BrowsingContext.New(config);
-            _ashDocument = await context.OpenAsync(_url);
+            browser.LoadUrlAsync(_url).Wait();
+            _ashDocument = await context.OpenAsync(async c =>{
+                var T = await browser.GetTextAsync();
+                c.Content(T);
+                });
         }
 
         public IHtmlCollection<IElement> QuerySelector(string query)
@@ -33,6 +40,11 @@ namespace _21CENT.Models
         public IHtmlCollection<IElement> FindByTag(string name)
         {
             return _ashDocument.GetElementsByTagName(name);
+        }
+
+        public List<INode> XPathSelector(string xpath)
+        {
+            return _ashDocument.Body.SelectNodes(xpath);
         }
     }
 }
