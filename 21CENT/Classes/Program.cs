@@ -1,6 +1,7 @@
 ﻿using Pastel;
 using _21CENT.Services;
 using Parser = _21CENT.Services.ParserCore;
+using AngleSharp;
 
 namespace _21CENT.Classes
 {
@@ -47,13 +48,11 @@ namespace _21CENT.Classes
         private static void Main()
         {
             var db = new PostDatabaseControl();
-            PostDatabaseControl.Host = "localhost";
+            PostDatabaseControl.Host = "192.168.0.110";
             Console.WriteLine($"{DateTime.Now}\tProgram start".Pastel("#00FF00"));
             var test = db.CatalogItems.First().Link.Replace("?print", "");
             var t = new Models.WebPage(test);
             t.Load().Wait();
-            var xpath = """//*[@id="fotorama"]/div[1]/div/div[2]""";
-            var next = t.XPathSelector(xpath);
             Console.WriteLine($"{DateTime.Now}\tProgram end.".Pastel("#00FF00"));
         }
     }
