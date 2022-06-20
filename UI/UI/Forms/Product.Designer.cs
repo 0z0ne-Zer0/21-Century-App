@@ -74,14 +74,15 @@
             // 
             this.productImage.Location = new System.Drawing.Point(31, 53);
             this.productImage.Name = "productImage";
-            this.productImage.Size = new System.Drawing.Size(209, 185);
+            this.productImage.Size = new System.Drawing.Size(354, 185);
+            this.productImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.productImage.TabIndex = 6;
             this.productImage.TabStop = false;
             // 
             // productName
             // 
             this.productName.AutoSize = true;
-            this.productName.Location = new System.Drawing.Point(262, 53);
+            this.productName.Location = new System.Drawing.Point(31, 256);
             this.productName.Name = "productName";
             this.productName.Size = new System.Drawing.Size(90, 20);
             this.productName.TabIndex = 7;
@@ -90,7 +91,7 @@
             // Price
             // 
             this.Price.AutoSize = true;
-            this.Price.Location = new System.Drawing.Point(262, 87);
+            this.Price.Location = new System.Drawing.Point(31, 288);
             this.Price.Name = "Price";
             this.Price.Size = new System.Drawing.Size(33, 20);
             this.Price.TabIndex = 8;
@@ -100,7 +101,7 @@
             // 
             this.oldPrice.AutoSize = true;
             this.oldPrice.Enabled = false;
-            this.oldPrice.Location = new System.Drawing.Point(262, 122);
+            this.oldPrice.Location = new System.Drawing.Point(31, 317);
             this.oldPrice.Name = "oldPrice";
             this.oldPrice.Size = new System.Drawing.Size(33, 20);
             this.oldPrice.TabIndex = 9;
@@ -110,17 +111,18 @@
             // 
             this.itemData.AllowUserToAddRows = false;
             this.itemData.AllowUserToDeleteRows = false;
+            this.itemData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.itemData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.itemData.ColumnHeadersVisible = false;
             this.itemData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.prop,
             this.value});
-            this.itemData.Location = new System.Drawing.Point(391, 87);
+            this.itemData.Location = new System.Drawing.Point(391, 53);
             this.itemData.Name = "itemData";
             this.itemData.ReadOnly = true;
             this.itemData.RowHeadersWidth = 51;
             this.itemData.RowTemplate.Height = 29;
-            this.itemData.Size = new System.Drawing.Size(397, 351);
+            this.itemData.Size = new System.Drawing.Size(397, 385);
             this.itemData.TabIndex = 10;
             // 
             // prop
@@ -129,7 +131,6 @@
             this.prop.MinimumWidth = 6;
             this.prop.Name = "prop";
             this.prop.ReadOnly = true;
-            this.prop.Width = 125;
             // 
             // value
             // 
@@ -137,7 +138,6 @@
             this.value.MinimumWidth = 6;
             this.value.Name = "value";
             this.value.ReadOnly = true;
-            this.value.Width = 125;
             // 
             // addToCart
             // 

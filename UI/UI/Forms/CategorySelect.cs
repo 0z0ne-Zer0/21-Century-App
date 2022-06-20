@@ -26,7 +26,7 @@
             TreeNode item = Category.SelectedNode;
             if (item != null)
             {
-                MessageBox.Show("The selected Item Name is: " + item.Text);
+                //MessageBox.Show("The selected Item Name is: " + item.Text);
                 if (item.Nodes.Count > 0)
                     return;
                 var db = new Services.PostDatabaseControl();
@@ -45,7 +45,7 @@
             TreeNode item = Category.SelectedNode;
             if (item != null)
             {
-                MessageBox.Show("The selected Item Name is: " + item.Text);
+                //MessageBox.Show("The selected Item Name is: " + item.Text);
                 if (item.Nodes.Count > 0)
                     return;
                 var db = new Services.PostDatabaseControl();

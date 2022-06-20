@@ -42,22 +42,22 @@ namespace UI.Forms
             }
             XmlDocument doc = new();
             doc.LoadXml(product.Props);
-            foreach (XmlElement T in doc)
+            foreach (XmlElement T in doc.DocumentElement.ChildNodes)
             {
-                if (T.Name == "section")
+                
+                var name = T.Attributes["name"].Value;
+                itemData.Rows.Add(name, null);
+                var last = itemData.Rows.Count - 1;
+                var q = new Font(Font, FontStyle.Bold);
+                itemData.Rows[last].Cells[0].Style.Font = q;
+                foreach (XmlElement I in T.ChildNodes)
                 {
-                    var name = T.Attributes["name"];
-                    itemData.Rows.Add(name, null);
-                    var last = itemData.Rows.Count - 1;
-                    itemData.Rows[last].Cells[0].Style.Font = new(itemData.Rows[last].Cells[0].Style.Font, FontStyle.Bold);
-                }
-                else
-                {
-                    var type = T.Attributes["type"].ToString();
-                    var value = T.InnerText.ToString();
-                    itemData.Rows.Add(prop, value);
+                    var type = I.Attributes["type"].Value;
+                    var value = I.InnerText.ToString();
+                    itemData.Rows.Add(type, value);
                 }
             }
+            productImage.Load("https://cdn21vek.by/img/galleries/7360/969/preview_b/32le5051d_horizont_6242ac6959a5b.jpeg");
         }
 
         private void Product_FormClosing(object sender, FormClosingEventArgs e)=>parent.Show();

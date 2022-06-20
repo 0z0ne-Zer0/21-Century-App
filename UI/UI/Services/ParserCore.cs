@@ -1,4 +1,5 @@
-﻿using UI.Models;
+﻿using System.Xml;
+using UI.Models;
 
 namespace UI.Services
 {
@@ -43,7 +44,65 @@ namespace UI.Services
             return pageAMT;
         }
 
+        static string Cleaner(string deb) //Price string cleaner
+        {
+            deb = deb.Replace("р.", "");
+            deb = deb.Replace("/шт.", "");
+            deb = deb.Replace(" ", "");
+            deb = deb.Replace(",", ".");
+            return deb;
+        }
 
+        internal static Models.CatalogItem GetProperties(string url) //Returns properties (price, availiability, discount, other)
+        {
+            float oldPrice = 0, curentPrice = 0;
+            bool stock = false, discount = false;
+            XmlDocument doc = new();
+            WebPage webPage = new(url);
+
+            XmlElement root = doc.CreateElement("root");
+            doc.AppendChild(root);
+            webPage.Load().Wait();
+
+            var lst = webPage.FindByClass("g-item-data");
+            if (lst[0].TextContent != "нет на складе")  //Get avaliability
+            {
+                stock = true;
+                lst = webPage.FindByClass("g-price");
+                if (lst.Length == 2) //Get discount
+                {
+                    discount = true;
+                    string deb1 = Cleaner(lst[0].TextContent.Split(' ')[0]), deb2 = Cleaner(lst[1].TextContent);
+                    oldPrice = float.Parse(deb1); //Prices if discount==true
+                    curentPrice = float.Parse(deb2);
+                }
+                else if (lst.Length == 1)
+                {
+                    discount = false;
+                    string deb = Cleaner(lst[0].TextContent);
+                    curentPrice = float.Parse(deb); //Prices if discount==false
+                }
+            }
+
+            var list = webPage.FindByClass("attrs__group");//Find tables with other properties
+            foreach (var T in list)
+            {
+                if (T.Children.Count() == 0)
+                    continue;
+                var sec = doc.CreateElement("section"); //First row of each table is section name
+                sec.SetAttribute("name", T.Children[0].Children[0].TextContent);
+                foreach (var I in T.Children.Skip(1))
+                {
+                    var cur = doc.CreateElement("prop");
+                    cur.SetAttribute("type", I.Children[0].TextContent); //First cell in each row is name of parameter
+                    cur.InnerText = (I.Children[1].TextContent); //Second cell is always the value
+                    sec.AppendChild(cur);
+                }
+                root.AppendChild(sec); //Add all parameters to current section
+            }
+
+            return new CatalogItem { Isdiscount = discount, Isinstock = stock, Oldprice = oldPrice, Price = curentPrice, Props = doc.OuterXml };
+        }
 
         public static List<CatalogItem> CatalogGet(string url) //Catalog parser
         {
@@ -55,46 +114,10 @@ namespace UI.Services
             var list = webPage.QuerySelector("dt.result__root > a"); //Parse link + name
             Parallel.ForEach(list, item =>
             {
-                static string Cleaner(string deb) //Price string cleaner
-                {
-                    if (deb.Contains("р."))
-                        deb = deb.Remove(deb.Length - 2);
-                    deb = deb.Replace(",", ".");
-                    deb = deb.Replace(" ", "");
-                    return deb;
-                }
-
-                bool stock = false, discount = false;
                 string link = "", name = "";
-                double old = 0, cur = 0;
-
                 link = item.GetAttribute("href") + "?print";  //Get versions for print
                 name = item.Children[1].TextContent;  //Get name
-
-                var T = new WebPage(link);
-                T.Load().Wait();
-
-                var lst = T.FindByClass("g-item-data");
-                if (lst[0].TextContent != "нет на складе")  //Get avaliability
-                {
-                    stock = true;
-                    lst = T.FindByClass("g-price");
-                    if (lst.Length == 2) //Get discount
-                    {
-                        discount = true;
-                        string deb1 = Cleaner(lst[0].TextContent.Split(' ')[0]), deb2 = Cleaner(lst[1].TextContent);
-                        old = double.Parse(deb1); //Prices if discount==true
-                        cur = double.Parse(deb2);
-                    }
-                    else if (lst.Length == 1)
-                    {
-                        discount = false;
-                        string deb = Cleaner(lst[0].TextContent);
-                        cur = double.Parse(deb); //Prices if discount==false
-                    }
-                }
-                Console.WriteLine("21Cent\t" + $"Loading {name} @ {link}");
-                result.Add(new Models.CatalogItem { Name = name, Link = link, Isinstock = stock, Isdiscount = discount, Oldprice = (float?)old, Price = (float?)cur }); //Adding item
+                result.Add(new CatalogItem { Name = name, Link = link }); //Adding item
             });
 
             return result;
