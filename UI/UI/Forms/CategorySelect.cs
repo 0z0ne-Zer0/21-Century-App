@@ -2,11 +2,11 @@
 {
     public partial class CategorySelect : Form
     {
-        public Form parent { get; }
-        public CategorySelect(Form parrent)
+        Form parent { get; }
+        public CategorySelect(Form parent)
         {
             InitializeComponent();
-            this.parent = parrent;
+            this.parent = parent;
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -17,7 +17,7 @@
 
         private void cartToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var open = new Cart();
+            var open = new Cart(null);
             open.Show();
         }
 

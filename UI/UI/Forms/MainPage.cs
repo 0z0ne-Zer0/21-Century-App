@@ -24,7 +24,7 @@ namespace UI.Forms
 
         private void cartToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var open = new Cart();
+            var open = new Cart(null);
             open.Show();
         }
     }

@@ -35,11 +35,13 @@
             this.productName = new System.Windows.Forms.Label();
             this.Price = new System.Windows.Forms.Label();
             this.oldPrice = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.itemData = new System.Windows.Forms.DataGridView();
+            this.prop = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.addToCart = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.productImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.itemData)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -104,18 +106,38 @@
             this.oldPrice.TabIndex = 9;
             this.oldPrice.Text = "0 р.";
             // 
-            // dataGridView1
+            // itemData
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(391, 87);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 29;
-            this.dataGridView1.Size = new System.Drawing.Size(397, 351);
-            this.dataGridView1.TabIndex = 10;
+            this.itemData.AllowUserToAddRows = false;
+            this.itemData.AllowUserToDeleteRows = false;
+            this.itemData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.itemData.ColumnHeadersVisible = false;
+            this.itemData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.prop,
+            this.value});
+            this.itemData.Location = new System.Drawing.Point(391, 87);
+            this.itemData.Name = "itemData";
+            this.itemData.ReadOnly = true;
+            this.itemData.RowHeadersWidth = 51;
+            this.itemData.RowTemplate.Height = 29;
+            this.itemData.Size = new System.Drawing.Size(397, 351);
+            this.itemData.TabIndex = 10;
+            // 
+            // prop
+            // 
+            this.prop.HeaderText = "Prop";
+            this.prop.MinimumWidth = 6;
+            this.prop.Name = "prop";
+            this.prop.ReadOnly = true;
+            this.prop.Width = 125;
+            // 
+            // value
+            // 
+            this.value.HeaderText = "Value";
+            this.value.MinimumWidth = 6;
+            this.value.Name = "value";
+            this.value.ReadOnly = true;
+            this.value.Width = 125;
             // 
             // addToCart
             // 
@@ -125,6 +147,7 @@
             this.addToCart.TabIndex = 11;
             this.addToCart.Text = "Add to cart";
             this.addToCart.UseVisualStyleBackColor = true;
+            this.addToCart.Click += new System.EventHandler(this.addToCart_Click);
             // 
             // Product
             // 
@@ -132,7 +155,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.addToCart);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.itemData);
             this.Controls.Add(this.oldPrice);
             this.Controls.Add(this.Price);
             this.Controls.Add(this.productName);
@@ -140,10 +163,12 @@
             this.Controls.Add(this.menuStrip1);
             this.Name = "Product";
             this.Text = "Product";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Product_FormClosing);
+            this.Load += new System.EventHandler(this.Product_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.productImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.itemData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -158,7 +183,9 @@
         private Label productName;
         private Label Price;
         private Label oldPrice;
-        private DataGridView dataGridView1;
+        private DataGridView itemData;
         private Button addToCart;
+        private DataGridViewTextBoxColumn prop;
+        private DataGridViewTextBoxColumn value;
     }
 }

@@ -2,15 +2,15 @@
 {
     public partial class Catalog : Form
     {
-        int parrentID;
-        public Form parent { get;}
-        private Models.SubCat Category { get; set;}
+        private int parrentID;
+        private Form parent { get; }
+        private Models.SubCat Category { get; set; }
 
-        public Catalog(int parrentID, Form parrent)
+        public Catalog(int parrentID, Form parent)
         {
             InitializeComponent();
             this.parrentID = parrentID;
-            this.parent = parrent;
+            this.parent = parent;
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -21,7 +21,7 @@
 
         private void cartToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var open = new Cart();
+            var open = new Cart(null);
             open.Show();
         }
 
@@ -46,22 +46,7 @@
             backgroundWorker1.RunWorkerAsync(curPage + 1);
         }
 
-        private void Items_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (Products.SelectedRows.Count == 0)
-                return;
-            DataGridViewRow item = Products.SelectedRows[0];
-
-            if (item != null)
-            {
-                MessageBox.Show("The selected Item Name is: " + item.Cells[1]);
-                var open = new Product(this);
-                open.Show();
-                this.Hide();
-            }
-        }
-
-        private void Items_KeyDown(object sender, KeyEventArgs e)
+        private void Products_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode != Keys.Enter || Products.SelectedRows.Count == 0)
                 return;
@@ -69,14 +54,16 @@
 
             if (item != null)
             {
+                var db = new Services.PostDatabaseControl();
                 MessageBox.Show("The selected Item Name is: " + item.Cells[1]);
-                var open = new Product(this);
+                var T = db.CatalogItems.First(c => c.Name == item.Cells[0].Value);
+                var open = new Product(this, T);
                 open.Show();
                 this.Hide();
             }
         }
 
-        private void Catalog_FormClosing(object sender, FormClosingEventArgs e)=>parent.Show();
+        private void Catalog_FormClosing(object sender, FormClosingEventArgs e) => parent.Show();
 
         private async void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
@@ -87,9 +74,8 @@
                 return;
             var tmp = Services.ParserCore.CatalogGet(catalog.Link + $"page:{nextPage}");
             foreach (var item in tmp)
-                item.Psid = catalog.Sid;
-            foreach(var item in tmp)
             {
+                item.Psid = catalog.Sid;
                 var T = db.CatalogItems.First(c => (c.Name == item.Name) && (c.Psid == catalog.Sid));
                 if (T != null)
                     db.Update(item);
@@ -104,6 +90,23 @@
             int max = int.Parse(pageCounter.Text.Split('/')[1]), cur = int.Parse(pageCounter.Text.Split('/')[0]);
             pageCounter.Text = $"{cur + 1}/{max}";
             LoadPage();
+        }
+
+        private void Products_MouseDoubleClick(object sender, EventArgs e)
+        {
+            if (Products.SelectedRows.Count == 0)
+                return;
+            DataGridViewRow item = Products.SelectedRows[0];
+
+            if (item != null)
+            {
+                var db = new Services.PostDatabaseControl();
+                MessageBox.Show("The selected Item Name is: " + item.Cells[1]);
+                var T = db.CatalogItems.First(c => c.Name == item.Cells[0].Value);
+                var open = new Product(this, T);
+                open.Show();
+                this.Hide();
+            }
         }
     }
 }

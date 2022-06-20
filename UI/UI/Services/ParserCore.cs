@@ -4,12 +4,12 @@ namespace UI.Services
 {
     internal class ParserCore
     {
-        public static List<SubCat> CategoryGet(MainCat parrent) //Gets categories from section index
+        public static List<SubCat> CategoryGet(MainCat parent) //Gets categories from section index
         {
             List<SubCat> result = new();
-            WebPage webPage = new(parrent.Link);
+            WebPage webPage = new(parent.Link);
 
-            Console.WriteLine("21Cent\t" + $"Debug: started parsing {parrent.Link}");
+            Console.WriteLine("21Cent\t" + $"Debug: started parsing {parent.Link}");
 
             webPage.Load().Wait();
             var list = webPage.QuerySelector("dt > a.cloud-sub__header"); //Parse for <dt> tags
@@ -17,10 +17,10 @@ namespace UI.Services
             {
                 var link = I.GetAttribute("href"); //Getting link
                 var title = I.TextContent; //Getting content title
-                result.Add(new Models.SubCat { Title = title, Link = link, Pmid = parrent.Mid });
+                result.Add(new Models.SubCat { Title = title, Link = link, Pmid = parent.Mid });
             });
 
-            Console.WriteLine("21Cent\t" + $"Debug: Ended parsing {parrent.Link}");
+            Console.WriteLine("21Cent\t" + $"Debug: Ended parsing {parent.Link}");
 
             return result;
         }

@@ -29,112 +29,96 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Data = new System.Windows.Forms.DataGridView();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.isInStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Discount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OldPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.catalogItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.isinstockDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.isdiscountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.oldpriceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Data)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.catalogItemBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // Data
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idDataGridViewTextBoxColumn,
-            this.nameDataGridViewTextBoxColumn,
-            this.isinstockDataGridViewTextBoxColumn,
-            this.isdiscountDataGridViewTextBoxColumn,
-            this.priceDataGridViewTextBoxColumn,
-            this.oldpriceDataGridViewTextBoxColumn});
-            this.dataGridView1.DataSource = this.catalogItemBindingSource;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 29;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(800, 450);
-            this.dataGridView1.TabIndex = 0;
+            this.Data.AllowUserToAddRows = false;
+            this.Data.AllowUserToDeleteRows = false;
+            this.Data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.Data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.name,
+            this.isInStock,
+            this.Discount,
+            this.Price,
+            this.OldPrice});
+            this.Data.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Data.Location = new System.Drawing.Point(0, 0);
+            this.Data.Name = "Data";
+            this.Data.ReadOnly = true;
+            this.Data.RowHeadersWidth = 51;
+            this.Data.RowTemplate.Height = 29;
+            this.Data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.Data.Size = new System.Drawing.Size(800, 450);
+            this.Data.TabIndex = 0;
+            this.Data.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Data_KeyPress);
+            // 
+            // name
+            // 
+            this.name.HeaderText = "Название";
+            this.name.MinimumWidth = 6;
+            this.name.Name = "name";
+            this.name.ReadOnly = true;
+            this.name.Width = 125;
+            // 
+            // isInStock
+            // 
+            this.isInStock.HeaderText = "Наличие";
+            this.isInStock.MinimumWidth = 6;
+            this.isInStock.Name = "isInStock";
+            this.isInStock.ReadOnly = true;
+            this.isInStock.Width = 125;
+            // 
+            // Discount
+            // 
+            this.Discount.HeaderText = "Скидка";
+            this.Discount.MinimumWidth = 6;
+            this.Discount.Name = "Discount";
+            this.Discount.ReadOnly = true;
+            this.Discount.Width = 125;
+            // 
+            // Price
+            // 
+            this.Price.HeaderText = "Цена";
+            this.Price.MinimumWidth = 6;
+            this.Price.Name = "Price";
+            this.Price.ReadOnly = true;
+            this.Price.Width = 125;
+            // 
+            // OldPrice
+            // 
+            this.OldPrice.HeaderText = "Старая цена";
+            this.OldPrice.MinimumWidth = 6;
+            this.OldPrice.Name = "OldPrice";
+            this.OldPrice.ReadOnly = true;
+            this.OldPrice.Width = 125;
             // 
             // catalogItemBindingSource
             // 
             this.catalogItemBindingSource.DataSource = typeof(UI.Models.CatalogItem);
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.idDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idDataGridViewTextBoxColumn.Visible = false;
-            this.idDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Название";
-            this.nameDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nameDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // isinstockDataGridViewTextBoxColumn
-            // 
-            this.isinstockDataGridViewTextBoxColumn.DataPropertyName = "Isinstock";
-            this.isinstockDataGridViewTextBoxColumn.HeaderText = "Наличие";
-            this.isinstockDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.isinstockDataGridViewTextBoxColumn.Name = "isinstockDataGridViewTextBoxColumn";
-            this.isinstockDataGridViewTextBoxColumn.ReadOnly = true;
-            this.isinstockDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // isdiscountDataGridViewTextBoxColumn
-            // 
-            this.isdiscountDataGridViewTextBoxColumn.DataPropertyName = "Isdiscount";
-            this.isdiscountDataGridViewTextBoxColumn.HeaderText = "Скидка";
-            this.isdiscountDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.isdiscountDataGridViewTextBoxColumn.Name = "isdiscountDataGridViewTextBoxColumn";
-            this.isdiscountDataGridViewTextBoxColumn.ReadOnly = true;
-            this.isdiscountDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // priceDataGridViewTextBoxColumn
-            // 
-            this.priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
-            this.priceDataGridViewTextBoxColumn.HeaderText = "Цена";
-            this.priceDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
-            this.priceDataGridViewTextBoxColumn.ReadOnly = true;
-            this.priceDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // oldpriceDataGridViewTextBoxColumn
-            // 
-            this.oldpriceDataGridViewTextBoxColumn.DataPropertyName = "Oldprice";
-            this.oldpriceDataGridViewTextBoxColumn.HeaderText = "Старая цена";
-            this.oldpriceDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.oldpriceDataGridViewTextBoxColumn.Name = "oldpriceDataGridViewTextBoxColumn";
-            this.oldpriceDataGridViewTextBoxColumn.ReadOnly = true;
-            this.oldpriceDataGridViewTextBoxColumn.Width = 125;
             // 
             // Cart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.Data);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Cart";
             this.Text = "Cart";
             this.TopMost = true;
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.Load += new System.EventHandler(this.Cart_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.Data)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.catalogItemBindingSource)).EndInit();
             this.ResumeLayout(false);
 
@@ -142,13 +126,13 @@
 
         #endregion
 
-        private DataGridView dataGridView1;
+        private DataGridView Data;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn isinstockDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn isdiscountDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn oldpriceDataGridViewTextBoxColumn;
         private BindingSource catalogItemBindingSource;
+        private DataGridViewTextBoxColumn name;
+        private DataGridViewTextBoxColumn isInStock;
+        private DataGridViewTextBoxColumn Discount;
+        private DataGridViewTextBoxColumn Price;
+        private DataGridViewTextBoxColumn OldPrice;
     }
 }

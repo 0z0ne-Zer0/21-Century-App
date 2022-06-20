@@ -53,41 +53,39 @@
             this.cartToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(750, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(6, 3, 0, 3);
+            this.menuStrip1.Size = new System.Drawing.Size(857, 30);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(76, 24);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // cartToolStripMenuItem
             // 
             this.cartToolStripMenuItem.Name = "cartToolStripMenuItem";
-            this.cartToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.cartToolStripMenuItem.Size = new System.Drawing.Size(50, 24);
             this.cartToolStripMenuItem.Text = "Cart";
             this.cartToolStripMenuItem.Click += new System.EventHandler(this.cartToolStripMenuItem_Click);
             // 
             // prev
             // 
-            this.prev.Location = new System.Drawing.Point(229, 290);
-            this.prev.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.prev.Location = new System.Drawing.Point(262, 387);
             this.prev.Name = "prev";
-            this.prev.Size = new System.Drawing.Size(82, 22);
+            this.prev.Size = new System.Drawing.Size(94, 29);
             this.prev.TabIndex = 7;
             this.prev.Text = "Previous";
             this.prev.UseVisualStyleBackColor = true;
             // 
             // next
             // 
-            this.next.Location = new System.Drawing.Point(428, 290);
-            this.next.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.next.Location = new System.Drawing.Point(489, 387);
             this.next.Name = "next";
-            this.next.Size = new System.Drawing.Size(82, 22);
+            this.next.Size = new System.Drawing.Size(94, 29);
             this.next.TabIndex = 8;
             this.next.Text = "Next";
             this.next.UseVisualStyleBackColor = true;
@@ -96,9 +94,9 @@
             // pageCounter
             // 
             this.pageCounter.AutoSize = true;
-            this.pageCounter.Location = new System.Drawing.Point(355, 293);
+            this.pageCounter.Location = new System.Drawing.Point(406, 391);
             this.pageCounter.Name = "pageCounter";
-            this.pageCounter.Size = new System.Drawing.Size(24, 15);
+            this.pageCounter.Size = new System.Drawing.Size(31, 20);
             this.pageCounter.TabIndex = 9;
             this.pageCounter.Text = "0/0";
             // 
@@ -118,16 +116,17 @@
             this.Price,
             this.OldPrice});
             this.Products.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.Products.Location = new System.Drawing.Point(10, 23);
-            this.Products.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Products.Location = new System.Drawing.Point(11, 31);
             this.Products.MultiSelect = false;
             this.Products.Name = "Products";
             this.Products.ReadOnly = true;
             this.Products.RowHeadersWidth = 51;
             this.Products.RowTemplate.Height = 29;
             this.Products.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Products.Size = new System.Drawing.Size(729, 245);
+            this.Products.Size = new System.Drawing.Size(833, 327);
             this.Products.TabIndex = 10;
+            this.Products.DoubleClick += new System.EventHandler(this.Products_MouseDoubleClick);
+            this.Products.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Products_KeyDown);
             // 
             // productName
             // 
@@ -171,15 +170,14 @@
             // 
             // Catalog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(750, 331);
+            this.ClientSize = new System.Drawing.Size(857, 441);
             this.Controls.Add(this.Products);
             this.Controls.Add(this.pageCounter);
             this.Controls.Add(this.next);
             this.Controls.Add(this.prev);
             this.Controls.Add(this.menuStrip1);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Catalog";
             this.Text = "Catalog";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Catalog_FormClosing);
