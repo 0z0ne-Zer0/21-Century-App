@@ -49,67 +49,107 @@ namespace _21CENT.Classes
             {
                 //Main category sync
                 var sourceMain = P.MainCats.ToList();
-                var destMain = new List<SQlite.MainCat>();
+                var destMain = L.MainCats;
                 foreach (var T in sourceMain)
                 {
                     SQlite.MainCat C = new SQlite.MainCat{Mid = T.Mid, Name = T.Name, Link = T.Link};
-                    destMain.Add(C);
+                    var F = destMain.FirstOrDefault(c => c.Link == C.Link);
+                    if (F == null)
+                        destMain.Add(C);
+                    else
+                    {
+                        F.Link=C.Link;
+                        F.Name=C.Link;
+                    }
                 }
-                L.UpdateRange(destMain);
                 L.SaveChanges();
 
                 //Subcategories sync
                 var sourceSub = P.SubCats.ToList();
-                var destSub = new List<SQlite.SubCat>();
+                var destSub = L.SubCats;
                 foreach (var T in sourceSub)
                 {
                     SQlite.SubCat C = new SQlite.SubCat{Sid = T.Sid, Title = T.Title, Link = T.Link, Pages = T.Pages, Pmid = T.Pmid};
-                    destSub.Add(C);
+                    var F = destSub.FirstOrDefault(c => c.Link == C.Link);
+                    if (F == null)
+                        destSub.Add(C);
+                    else
+                    {
+                        F.Link = C.Link;
+                        F.Pages = C.Pages;
+                        F.Pmid = C.Pmid;
+                        F.Title = C.Title;
+                    }
                 }
-                L.UpdateRange(destSub);
                 L.SaveChanges();
 
                 //Catalog items sync
-                var sourceCat = P.CatalogItems.ToList();
-                var destCat = new List<SQlite.CatalogItem>();
+                var sourceCat = P.CatalogItems;
+                var destCat = L.CatalogItems;
                 foreach (var T in sourceCat)
                 {
                     var discount = BitConverter.GetBytes((bool)T.Isdiscount);
                     var availiable = BitConverter.GetBytes((bool)T.Isinstock);
                     SQlite.CatalogItem C = new SQlite.CatalogItem{Cid = T.Cid, Name = T.Name, Link = T.Link, Price = T.Price, Oldprice = T.Oldprice, Props = T.Props, Psid = T.Psid, Isdiscount = discount, Isinstock = availiable};
-                    destCat.Add(C);
+                    var F = destCat.FirstOrDefault(c => c.Cid == C.Cid);
+                    if (F == null)
+                        destCat.Add(C);
+                    else
+                    {
+                        F.Name = C.Name;
+                        F.Link = C.Link;
+                        F.Price = C.Price;
+                        F.Oldprice = C.Oldprice;
+                        F.Props = C.Props;
+                        F.Psid = C.Psid; 
+                        F.Isdiscount = C.Isdiscount;
+                        F.Isinstock = C.Isinstock;
+                    }
                 }
-                L.UpdateRange(destSub);
                 L.SaveChanges();
             }
             //Post2SQLite Sync
             if (L2P)
             {
                 //Main category sync
-                var sourceMain = L.MainCats.ToList();
-                var destMain = P.MainCats.ToList();
+                var sourceMain = L.MainCats;
+                var destMain = P.MainCats;
                 foreach (var T in sourceMain)
                 {
                     PostgreSQL.MainCat C = new PostgreSQL.MainCat{Mid = Convert.ToInt32(T.Mid), Name = T.Name, Link = T.Link};
-                    destMain.Add(C);
+                    var F = destMain.FirstOrDefault(c => c.Link == C.Link);
+                    if (F == null)
+                        destMain.Add(C);
+                    else
+                    {
+                        F.Link=C.Link;
+                        F.Name=C.Link;
+                    }
                 }
-                P.UpdateRange(destMain);
                 P.SaveChanges();
 
                 //Subcategories sync
-                var sourceSub = L.SubCats.ToList();
-                var destSub = P.SubCats.ToList();
+                var sourceSub = L.SubCats;
+                var destSub = P.SubCats;
                 foreach (var T in sourceSub)
                 {
                     PostgreSQL.SubCat C = new PostgreSQL.SubCat{Sid = Convert.ToInt32(T.Sid), Title = T.Title, Link = T.Link, Pages = Convert.ToInt32(T.Pages), Pmid = Convert.ToInt32(T.Pmid)};
-                    destSub.Add(C);
+                    var F = destSub.FirstOrDefault(c => c.Link == C.Link);
+                    if (F == null)
+                        destSub.Add(C);
+                    else
+                    {
+                        F.Link = C.Link;
+                        F.Pages = C.Pages;
+                        F.Pmid = C.Pmid;
+                        F.Title = C.Title;
+                    }
                 }
-                P.UpdateRange(destSub);
                 P.SaveChanges();
 
                 //Catalog items sync
-                var sourceCat = L.CatalogItems.ToList();
-                var destCat = P.CatalogItems.ToList();
+                var sourceCat = L.CatalogItems;
+                var destCat = P.CatalogItems;
                 foreach (var T in sourceCat)
                 {
                     bool discount=false, availiable=false;
@@ -117,9 +157,21 @@ namespace _21CENT.Classes
                     discount = BitConverter.ToBoolean(T.Isdiscount);
                     availiable = BitConverter.ToBoolean(T.Isinstock);
                     PostgreSQL.CatalogItem C = new PostgreSQL.CatalogItem{Cid = Convert.ToInt32(T.Cid), Name = T.Name, Link = T.Link, Price = Convert.ToInt32(T.Price), Oldprice = Convert.ToInt32(T.Oldprice), Props = T.Props, Psid = Convert.ToInt32(T.Psid), Isdiscount = discount, Isinstock = availiable};
-                    destCat.Add(C);
+                    var F = destCat.FirstOrDefault(c => c.Cid == C.Cid);
+                    if (F == null)
+                        destCat.Add(C);
+                    else
+                    {
+                        F.Name = C.Name;
+                        F.Link = C.Link;
+                        F.Price = C.Price;
+                        F.Oldprice = C.Oldprice;
+                        F.Props = C.Props;
+                        F.Psid = C.Psid; 
+                        F.Isdiscount = C.Isdiscount;
+                        F.Isinstock = C.Isinstock;
+                    }
                 }
-                P.UpdateRange(destSub);
                 P.SaveChanges();
             }
         }
@@ -130,7 +182,7 @@ namespace _21CENT.Classes
             var PostSQL_DB = new PostgreSQL.DatabaseContext();
 
             PostgreSQL.DatabaseContext.DataSource = "localhost";
-            SQlite.DatabaseContext.DataSource = "/home/zer0/Documents/repos/21-Century-App/21CENT/Resources/Database.sqlite";
+            SQlite.DatabaseContext.DataSource = "Resources/Database.sqlite";
             
             Console.WriteLine($"{DateTime.Now}\tProgram start".Pastel("#00FF00"));
             DatabaseSync(PostSQL_DB, SQLite_DB, P2L:true);
