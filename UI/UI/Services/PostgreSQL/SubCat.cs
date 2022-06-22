@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace UI.Models
+namespace UI.Services.PostgreSQL
 {
     public partial class SubCat
     {

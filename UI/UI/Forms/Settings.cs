@@ -1,11 +1,13 @@
-﻿namespace UI.Forms
+﻿using Post = UI.Services.PostgreSQL;
+
+namespace UI.Forms
 {
     public partial class Settings : Form
     {
         public Settings()
         {
             InitializeComponent();
-            IP.Text = Services.PostDatabaseControl.Host;
+            IP.Text = Post.DatabaseContext.Host;
             DB_Switch();
         }
 
@@ -31,10 +33,10 @@
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Services.PostDatabaseControl.Host = this.IP.Text;
+            Post.DatabaseContext.Host = this.IP.Text;
             try
             {
-                var tmp = new Services.PostDatabaseControl().MainCats.ToList();
+                var tmp = new Post.DatabaseContext().MainCats.ToList();
             }
             catch (Exception ex)
             {

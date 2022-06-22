@@ -74,18 +74,21 @@
             // 
             // prev
             // 
-            this.prev.Location = new System.Drawing.Point(262, 387);
+            this.prev.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.prev.Location = new System.Drawing.Point(0, 412);
             this.prev.Name = "prev";
-            this.prev.Size = new System.Drawing.Size(94, 29);
+            this.prev.Size = new System.Drawing.Size(857, 29);
             this.prev.TabIndex = 7;
             this.prev.Text = "Previous";
             this.prev.UseVisualStyleBackColor = true;
             // 
             // next
             // 
-            this.next.Location = new System.Drawing.Point(489, 387);
+            this.next.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.next.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.next.Location = new System.Drawing.Point(0, 383);
             this.next.Name = "next";
-            this.next.Size = new System.Drawing.Size(94, 29);
+            this.next.Size = new System.Drawing.Size(857, 29);
             this.next.TabIndex = 8;
             this.next.Text = "Next";
             this.next.UseVisualStyleBackColor = true;
@@ -94,7 +97,7 @@
             // pageCounter
             // 
             this.pageCounter.AutoSize = true;
-            this.pageCounter.Location = new System.Drawing.Point(406, 391);
+            this.pageCounter.Location = new System.Drawing.Point(12, 30);
             this.pageCounter.Name = "pageCounter";
             this.pageCounter.Size = new System.Drawing.Size(31, 20);
             this.pageCounter.TabIndex = 9;
@@ -108,6 +111,10 @@
             // 
             this.Products.AllowUserToAddRows = false;
             this.Products.AllowUserToDeleteRows = false;
+            this.Products.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Products.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.Products.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Products.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.productName,
@@ -116,11 +123,12 @@
             this.Price,
             this.OldPrice});
             this.Products.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.Products.Location = new System.Drawing.Point(11, 31);
+            this.Products.Location = new System.Drawing.Point(12, 50);
             this.Products.MultiSelect = false;
             this.Products.Name = "Products";
             this.Products.ReadOnly = true;
             this.Products.RowHeadersWidth = 51;
+            this.Products.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.Products.RowTemplate.Height = 29;
             this.Products.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.Products.Size = new System.Drawing.Size(833, 327);
@@ -134,7 +142,6 @@
             this.productName.MinimumWidth = 6;
             this.productName.Name = "productName";
             this.productName.ReadOnly = true;
-            this.productName.Width = 125;
             // 
             // IsInStock
             // 
@@ -142,7 +149,6 @@
             this.IsInStock.MinimumWidth = 6;
             this.IsInStock.Name = "IsInStock";
             this.IsInStock.ReadOnly = true;
-            this.IsInStock.Width = 125;
             // 
             // IsDiscount
             // 
@@ -150,7 +156,6 @@
             this.IsDiscount.MinimumWidth = 6;
             this.IsDiscount.Name = "IsDiscount";
             this.IsDiscount.ReadOnly = true;
-            this.IsDiscount.Width = 125;
             // 
             // Price
             // 
@@ -158,7 +163,6 @@
             this.Price.MinimumWidth = 6;
             this.Price.Name = "Price";
             this.Price.ReadOnly = true;
-            this.Price.Width = 125;
             // 
             // OldPrice
             // 
@@ -166,7 +170,6 @@
             this.OldPrice.MinimumWidth = 6;
             this.OldPrice.Name = "OldPrice";
             this.OldPrice.ReadOnly = true;
-            this.OldPrice.Width = 125;
             // 
             // Catalog
             // 

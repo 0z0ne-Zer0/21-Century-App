@@ -1,5 +1,7 @@
 ﻿using System.Xml;
 using UI.Models;
+using UI.Services.PostgreSQL;
+using Post = UI.Services.PostgreSQL;
 
 namespace UI.Services
 {
@@ -18,7 +20,7 @@ namespace UI.Services
             {
                 var link = I.GetAttribute("href"); //Getting link
                 var title = I.TextContent; //Getting content title
-                result.Add(new Models.SubCat { Title = title, Link = link, Pmid = parent.Mid });
+                result.Add(new Post.SubCat { Title = title, Link = link, Pmid = parent.Mid });
             });
 
             Console.WriteLine("21Cent\t" + $"Debug: Ended parsing {parent.Link}");
@@ -53,7 +55,7 @@ namespace UI.Services
             return deb;
         }
 
-        internal static Models.CatalogItem GetProperties(string url) //Returns properties (price, availiability, discount, other)
+        internal static CatalogItem GetProperties(string url) //Returns properties (price, availiability, discount, other)
         {
             float oldPrice = 0, curentPrice = 0;
             bool stock = false, discount = false;

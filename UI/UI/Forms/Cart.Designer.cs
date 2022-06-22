@@ -1,4 +1,6 @@
-﻿namespace UI.Forms
+﻿using UI.Services.PostgreSQL;
+
+namespace UI.Forms
 {
     partial class Cart
     {
@@ -104,7 +106,7 @@
             // 
             // catalogItemBindingSource
             // 
-            this.catalogItemBindingSource.DataSource = typeof(UI.Models.CatalogItem);
+            this.catalogItemBindingSource.DataSource = typeof(CatalogItem);
             // 
             // Cart
             // 

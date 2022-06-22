@@ -1,13 +1,14 @@
 ﻿using System.Xml;
+using Post = UI.Services.PostgreSQL;
 
 namespace UI.Forms
 {
     public partial class Product : Form
     {
         Form parent { get; }
-        Models.CatalogItem product { get; }
+        Post.CatalogItem product { get; }
 
-        public Product(Form parent, Models.CatalogItem product)
+        public Product(Form parent, Post.CatalogItem product)
         {
             InitializeComponent();
             this.parent = parent;
@@ -63,6 +64,5 @@ namespace UI.Forms
         private void Product_FormClosing(object sender, FormClosingEventArgs e)=>parent.Show();
 
         private void addToCart_Click(object sender, EventArgs e)=>Models.CartItems.Cart.Add(product);
-        
     }
 }

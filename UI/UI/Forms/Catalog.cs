@@ -1,10 +1,14 @@
-﻿namespace UI.Forms
+﻿using Post = UI.Services.PostgreSQL;
+
+namespace UI.Forms
 {
     public partial class Catalog : Form
     {
         private int parrentID;
         private Form parent { get; }
-        private Models.SubCat Category { get; set; }
+        private Post.SubCat Category { get; set; }
+        int currentPage { get; set; } = 1;
+        int? maxPages { get; set; } = 0;
 
         public Catalog(int parrentID, Form parent)
         {
@@ -27,24 +31,25 @@
 
         private void Catalog_Load(object sender, EventArgs e)
         {
-            var db = new Services.PostDatabaseControl();
+            var db = new Post.DatabaseContext();
             Category = db.SubCats.First(c => c.Sid == parrentID);
-            var maxPages = Category.Pages;
-            pageCounter.Text = $"1/{maxPages}";
+            maxPages = Category.Pages;
+            pageCounter.Text = $"Страница 1/{maxPages}";
             LoadPage();
         }
 
         private void LoadPage()
         {
-            var db = new Services.PostDatabaseControl();
+            this.Products.Rows.Clear();
+            var db = new Post.DatabaseContext();
             var catalog = db.CatalogItems.Where(c => c.Psid == parrentID).ToList();
-            var curPage = int.Parse(pageCounter.Text.Split('/')[0]);
-            for (int i = 0 + ((curPage - 1) * 60); i < 60 * curPage && i < catalog.Count; i++)
+            for (int i = 0 + (currentPage * 60); i < 60 * (currentPage-1) && i < catalog.Count; i++)
             {
                 Products.Rows.Add(catalog[i].Name, catalog[i].Isinstock, catalog[i].Isdiscount, catalog[i].Price, catalog[i].Oldprice);
             }
-            if (catalog.Count <= curPage * 60)
-                backgroundWorker1.RunWorkerAsync(curPage + 1);
+            if (catalog.Count <= currentPage * 60)
+                backgroundWorker1.RunWorkerAsync(currentPage + 1);
+            currentPage++;
         }
 
         private void Products_KeyDown(object sender, KeyEventArgs e)
@@ -55,7 +60,7 @@
 
             if (item != null)
             {
-                var db = new Services.PostDatabaseControl();
+                var db = new Post.DatabaseContext();
                 //MessageBox.Show("The selected Item Name is: " + item.Cells[1]);
                 var T = db.CatalogItems.First(c => c.Name == item.Cells[0].Value);
                 var open = new Product(this, T);
@@ -68,10 +73,10 @@
 
         private async void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            var db = new Services.PostDatabaseControl();
+            var db = new Post.DatabaseContext();
             var catalog = db.SubCats.First(c => c.Sid == parrentID);
             var nextPage = int.Parse(e.Argument.ToString());
-            if (catalog.Pages < nextPage)
+            if (maxPages < nextPage)
                 return;
             var tmp = Services.ParserCore.CatalogGet(catalog.Link + $"page:{nextPage}");
             Parallel.ForEach(tmp, T =>
@@ -104,8 +109,7 @@
 
         private void next_Click(object sender, EventArgs e)
         {
-            int max = int.Parse(pageCounter.Text.Split('/')[1]), cur = int.Parse(pageCounter.Text.Split('/')[0]);
-            pageCounter.Text = $"{cur + 1}/{max}";
+            pageCounter.Text = $"Cтраница {currentPage + 1}/{maxPages}";
             LoadPage();
         }
 
@@ -117,7 +121,7 @@
 
             if (item != null)
             {
-                var db = new Services.PostDatabaseControl();
+                var db = new Post.DatabaseContext();
                 //MessageBox.Show("The selected Item Name is: " + item.Cells[1]);
                 var T = db.CatalogItems.First(c => c.Name == item.Cells[0].Value);
                 var open = new Product(this, T);

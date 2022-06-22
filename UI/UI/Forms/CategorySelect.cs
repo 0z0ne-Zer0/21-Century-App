@@ -1,4 +1,6 @@
-﻿namespace UI.Forms
+﻿using Post = UI.Services.PostgreSQL;
+
+namespace UI.Forms
 {
     public partial class CategorySelect : Form
     {
@@ -29,7 +31,7 @@
                 //MessageBox.Show("The selected Item Name is: " + item.Text);
                 if (item.Nodes.Count > 0)
                     return;
-                var db = new Services.PostDatabaseControl();
+                var db = new Post.DatabaseContext();
                 var id = db.SubCats.Where(c => c.Title == item.Text).ToArray()[0].Sid;
                 var open = new Catalog(id, this);
                 open.Show();
@@ -48,7 +50,7 @@
                 //MessageBox.Show("The selected Item Name is: " + item.Text);
                 if (item.Nodes.Count > 0)
                     return;
-                var db = new Services.PostDatabaseControl();
+                var db = new Post.DatabaseContext();
                 var id = db.SubCats.Where(c => c.Title == item.Text).ToArray()[0].Sid;
                 var open = new Catalog(id, this);
                 open.Show();
@@ -58,7 +60,7 @@
 
         private void CategorySelect_Load(object sender, EventArgs e)
         {
-            var db = new Services.PostDatabaseControl();
+            var db = new Post.DatabaseContext();
             var temp = db.MainCats.ToList();
             foreach (var item in temp)
             {

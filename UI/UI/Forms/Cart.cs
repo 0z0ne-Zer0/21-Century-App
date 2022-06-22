@@ -1,4 +1,6 @@
-﻿namespace UI.Forms
+﻿using Post = UI.Services.PostgreSQL;
+
+namespace UI.Forms
 {
     public partial class Cart : Form
     {
@@ -28,7 +30,7 @@
             }
             if (e.KeyChar == (char)Keys.Enter)
             {
-                var db = new Services.PostDatabaseControl();
+                var db = new Post.DatabaseContext();
                 var open = db.CatalogItems.First(c => c.Name == item.Cells[0].Value);
                 var T = new Product(RefParent, open);
             }

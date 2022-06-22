@@ -37,9 +37,12 @@
             // 
             // Catalog
             // 
-            this.Catalog.Location = new System.Drawing.Point(77, 227);
+            this.Catalog.AutoSize = true;
+            this.Catalog.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Catalog.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.Catalog.Location = new System.Drawing.Point(0, 255);
             this.Catalog.Name = "Catalog";
-            this.Catalog.Size = new System.Drawing.Size(122, 46);
+            this.Catalog.Size = new System.Drawing.Size(272, 30);
             this.Catalog.TabIndex = 3;
             this.Catalog.Text = "Catalog";
             this.Catalog.UseVisualStyleBackColor = true;

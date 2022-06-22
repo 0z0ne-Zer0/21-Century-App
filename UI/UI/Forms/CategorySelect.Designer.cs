@@ -66,9 +66,12 @@
             // 
             // Category
             // 
-            this.Category.Location = new System.Drawing.Point(145, 44);
+            this.Category.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Category.Location = new System.Drawing.Point(157, 28);
             this.Category.Name = "Category";
-            this.Category.Size = new System.Drawing.Size(643, 394);
+            this.Category.Size = new System.Drawing.Size(643, 422);
             this.Category.TabIndex = 8;
             this.Category.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Category_KeyDown);
             this.Category.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Category_MouseDoubleClick);
@@ -93,7 +96,7 @@
             // 
             this.Search.Location = new System.Drawing.Point(12, 100);
             this.Search.Name = "Search";
-            this.Search.Size = new System.Drawing.Size(94, 29);
+            this.Search.Size = new System.Drawing.Size(125, 29);
             this.Search.TabIndex = 11;
             this.Search.Text = "Search";
             this.Search.UseVisualStyleBackColor = true;

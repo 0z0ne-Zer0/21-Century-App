@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using UI.Models;
 
-namespace UI.Services
+namespace UI.Services.PostgreSQL
 {
-    public partial class PostDatabaseControl : DbContext
+    public partial class DatabaseContext : DbContext
     {
-        public PostDatabaseControl()
+        public DatabaseContext()
         {
         }
 
-        public PostDatabaseControl(DbContextOptions<PostDatabaseControl> options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
         }
