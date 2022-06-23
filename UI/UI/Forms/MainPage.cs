@@ -1,4 +1,4 @@
-using System.Xml.Schema;
+﻿using System.Xml.Schema;
 
 namespace UI.Forms
 {
@@ -11,6 +11,11 @@ namespace UI.Forms
 
         private void catalog_Click(object sender, EventArgs e)
         {
+            if (UI.Services.PostgreSQL.DatabaseContext.Host == null && UI.Services.SQLite.DatabaseContext.DataSource == null)
+            {
+                MessageBox.Show("Не загружена база данных");
+                return;
+            }
             var open = new CategorySelect(this);
             open.Show();
             this.Hide();

@@ -45,7 +45,7 @@ namespace UI.Forms
             // Data
             // 
             this.Data.AllowUserToAddRows = false;
-            this.Data.AllowUserToDeleteRows = false;
+            this.Data.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.Data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.name,
@@ -62,6 +62,7 @@ namespace UI.Forms
             this.Data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.Data.Size = new System.Drawing.Size(800, 450);
             this.Data.TabIndex = 0;
+            this.Data.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.Data_UserDeletingRow);
             this.Data.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Data_KeyPress);
             // 
             // name
@@ -70,43 +71,46 @@ namespace UI.Forms
             this.name.MinimumWidth = 6;
             this.name.Name = "name";
             this.name.ReadOnly = true;
-            this.name.Width = 125;
             // 
             // isInStock
             // 
+            this.isInStock.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.isInStock.HeaderText = "Наличие";
             this.isInStock.MinimumWidth = 6;
             this.isInStock.Name = "isInStock";
             this.isInStock.ReadOnly = true;
-            this.isInStock.Width = 125;
+            this.isInStock.Width = 99;
             // 
             // Discount
             // 
+            this.Discount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.Discount.HeaderText = "Скидка";
             this.Discount.MinimumWidth = 6;
             this.Discount.Name = "Discount";
             this.Discount.ReadOnly = true;
-            this.Discount.Width = 125;
+            this.Discount.Width = 86;
             // 
             // Price
             // 
+            this.Price.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.Price.HeaderText = "Цена";
             this.Price.MinimumWidth = 6;
             this.Price.Name = "Price";
             this.Price.ReadOnly = true;
-            this.Price.Width = 125;
+            this.Price.Width = 74;
             // 
             // OldPrice
             // 
+            this.OldPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.OldPrice.HeaderText = "Старая цена";
             this.OldPrice.MinimumWidth = 6;
             this.OldPrice.Name = "OldPrice";
             this.OldPrice.ReadOnly = true;
-            this.OldPrice.Width = 125;
+            this.OldPrice.Width = 124;
             // 
             // catalogItemBindingSource
             // 
-            this.catalogItemBindingSource.DataSource = typeof(CatalogItem);
+            this.catalogItemBindingSource.DataSource = typeof(UI.Services.PostgreSQL.CatalogItem);
             // 
             // Cart
             // 

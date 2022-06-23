@@ -1,11 +1,10 @@
 ﻿using System.Xml;
 using UI.Models;
-using UI.Services.PostgreSQL;
-using Post = UI.Services.PostgreSQL;
+using UI.Services.SQLite;
 
 namespace UI.Services
 {
-    internal class ParserCore
+    internal class ParserCoreLite
     {
         public static List<SubCat> CategoryGet(MainCat parent) //Gets categories from section index
         {
@@ -20,7 +19,7 @@ namespace UI.Services
             {
                 var link = I.GetAttribute("href"); //Getting link
                 var title = I.TextContent; //Getting content title
-                result.Add(new Post.SubCat { Title = title, Link = link, Pmid = parent.Mid });
+                result.Add(new SubCat { Title = title, Link = link, Pmid = parent.Mid });
             });
 
             Console.WriteLine("21Cent\t" + $"Debug: Ended parsing {parent.Link}");
@@ -46,7 +45,7 @@ namespace UI.Services
             return pageAMT;
         }
 
-        static string Cleaner(string deb) //Price string cleaner
+        private static string Cleaner(string deb) //Price string cleaner
         {
             deb = deb.Replace("р.", "");
             deb = deb.Replace("/шт.", "");
@@ -74,7 +73,7 @@ namespace UI.Services
                 if (lst.Length == 2) //Get discount
                 {
                     discount = true;
-                    string deb1 = Cleaner(lst[0].TextContent.Split(' ')[0]), deb2 = Cleaner(lst[1].TextContent);
+                    string deb1 = Cleaner(lst[0].Children[0].TextContent.Split(' ')[0]), deb2 = Cleaner(lst[0].Children[1].TextContent);
                     oldPrice = float.Parse(deb1); //Prices if discount==true
                     curentPrice = float.Parse(deb2);
                 }
@@ -103,7 +102,7 @@ namespace UI.Services
                 root.AppendChild(sec); //Add all parameters to current section
             }
 
-            return new CatalogItem { Isdiscount = discount, Isinstock = stock, Oldprice = oldPrice, Price = curentPrice, Props = doc.OuterXml };
+            return new CatalogItem { Isdiscount = BitConverter.GetBytes(discount), Isinstock = BitConverter.GetBytes(stock), Oldprice = oldPrice, Price = curentPrice, Props = doc.OuterXml };
         }
 
         public static List<CatalogItem> CatalogGet(string url) //Catalog parser
@@ -112,8 +111,7 @@ namespace UI.Services
             WebPage webPage = new(url);
 
             webPage.Load().Wait();
-
-            var list = webPage.QuerySelector("dt.result__root > a"); //Parse link + name
+            var list = webPage.QuerySelector("dt > a.result__link"); //Parse link + name
             Parallel.ForEach(list, item =>
             {
                 string link = "", name = "";

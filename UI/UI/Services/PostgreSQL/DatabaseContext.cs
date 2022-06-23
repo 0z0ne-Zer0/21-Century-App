@@ -20,7 +20,7 @@ namespace UI.Services.PostgreSQL
         public virtual DbSet<MainCat> MainCats { get; set; } = null!;
         public virtual DbSet<SubCat> SubCats { get; set; } = null!;
 
-        static public string Host { get; set; }
+        static public string Host { get; set; } = null;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

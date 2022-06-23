@@ -35,6 +35,8 @@
             this.searchQuery = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.Search = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.searchProgress = new System.Windows.Forms.ProgressBar();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,9 +71,9 @@
             this.Category.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Category.Location = new System.Drawing.Point(157, 28);
+            this.Category.Location = new System.Drawing.Point(143, 28);
             this.Category.Name = "Category";
-            this.Category.Size = new System.Drawing.Size(643, 422);
+            this.Category.Size = new System.Drawing.Size(657, 422);
             this.Category.TabIndex = 8;
             this.Category.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Category_KeyDown);
             this.Category.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Category_MouseDoubleClick);
@@ -100,12 +102,28 @@
             this.Search.TabIndex = 11;
             this.Search.Text = "Search";
             this.Search.UseVisualStyleBackColor = true;
+            this.Search.Click += new System.EventHandler(this.Search_Click);
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            // 
+            // searchProgress
+            // 
+            this.searchProgress.Location = new System.Drawing.Point(12, 148);
+            this.searchProgress.Name = "searchProgress";
+            this.searchProgress.Size = new System.Drawing.Size(125, 29);
+            this.searchProgress.TabIndex = 12;
             // 
             // CategorySelect
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.searchProgress);
             this.Controls.Add(this.Search);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.searchQuery);
@@ -131,5 +149,7 @@
         private TextBox searchQuery;
         private Label label1;
         private Button Search;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private ProgressBar searchProgress;
     }
 }

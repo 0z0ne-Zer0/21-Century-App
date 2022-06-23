@@ -35,12 +35,19 @@
             this.next = new System.Windows.Forms.Button();
             this.pageCounter = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             this.Products = new System.Windows.Forms.DataGridView();
             this.productName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IsInStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IsDiscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OldPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker7 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker8 = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Products)).BeginInit();
             this.SuspendLayout();
@@ -75,12 +82,14 @@
             // prev
             // 
             this.prev.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.prev.Enabled = false;
             this.prev.Location = new System.Drawing.Point(0, 412);
             this.prev.Name = "prev";
             this.prev.Size = new System.Drawing.Size(857, 29);
             this.prev.TabIndex = 7;
             this.prev.Text = "Previous";
             this.prev.UseVisualStyleBackColor = true;
+            this.prev.Click += new System.EventHandler(this.prev_Click);
             // 
             // next
             // 
@@ -105,15 +114,24 @@
             // 
             // backgroundWorker1
             // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerPost_DoWork);
+            // 
+            // backgroundWorker2
+            // 
+            this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerPost_DoWork);
+            // 
+            // backgroundWorker3
+            // 
+            this.backgroundWorker3.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerPost_DoWork);
+            // 
+            // backgroundWorker4
+            // 
+            this.backgroundWorker4.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerPost_DoWork);
             // 
             // Products
             // 
             this.Products.AllowUserToAddRows = false;
             this.Products.AllowUserToDeleteRows = false;
-            this.Products.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.Products.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.Products.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Products.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -145,31 +163,43 @@
             // 
             // IsInStock
             // 
+            this.IsInStock.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.IsInStock.HeaderText = "Наличие";
             this.IsInStock.MinimumWidth = 6;
             this.IsInStock.Name = "IsInStock";
             this.IsInStock.ReadOnly = true;
+            this.IsInStock.Width = 99;
             // 
             // IsDiscount
             // 
+            this.IsDiscount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.IsDiscount.HeaderText = "Скидка";
             this.IsDiscount.MinimumWidth = 6;
             this.IsDiscount.Name = "IsDiscount";
             this.IsDiscount.ReadOnly = true;
+            this.IsDiscount.Width = 86;
             // 
             // Price
             // 
+            this.Price.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.Price.HeaderText = "Цена";
             this.Price.MinimumWidth = 6;
             this.Price.Name = "Price";
             this.Price.ReadOnly = true;
+            this.Price.Width = 74;
             // 
             // OldPrice
             // 
+            this.OldPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.OldPrice.HeaderText = "Старая цена";
             this.OldPrice.MinimumWidth = 6;
             this.OldPrice.Name = "OldPrice";
             this.OldPrice.ReadOnly = true;
+            this.OldPrice.Width = 124;
+            // 
+            // backgroundWorker5
+            // 
+            this.backgroundWorker5.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerLite_DoWork);
             // 
             // Catalog
             // 
@@ -202,11 +232,18 @@
         private Button next;
         private Label pageCounter;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker2;
+        private System.ComponentModel.BackgroundWorker backgroundWorker3;
+        private System.ComponentModel.BackgroundWorker backgroundWorker4;
         private DataGridView Products;
         private DataGridViewTextBoxColumn productName;
         private DataGridViewTextBoxColumn IsInStock;
         private DataGridViewTextBoxColumn IsDiscount;
         private DataGridViewTextBoxColumn Price;
         private DataGridViewTextBoxColumn OldPrice;
+        private System.ComponentModel.BackgroundWorker backgroundWorker5;
+        private System.ComponentModel.BackgroundWorker backgroundWorker6;
+        private System.ComponentModel.BackgroundWorker backgroundWorker7;
+        private System.ComponentModel.BackgroundWorker backgroundWorker8;
     }
 }

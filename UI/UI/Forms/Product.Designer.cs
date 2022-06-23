@@ -72,6 +72,9 @@
             // 
             // productImage
             // 
+            this.productImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.productImage.Location = new System.Drawing.Point(31, 53);
             this.productImage.Name = "productImage";
             this.productImage.Size = new System.Drawing.Size(354, 185);
@@ -81,6 +84,9 @@
             // 
             // productName
             // 
+            this.productName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.productName.AutoSize = true;
             this.productName.Location = new System.Drawing.Point(31, 256);
             this.productName.Name = "productName";
@@ -90,6 +96,9 @@
             // 
             // Price
             // 
+            this.Price.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Price.AutoSize = true;
             this.Price.Location = new System.Drawing.Point(31, 288);
             this.Price.Name = "Price";
@@ -99,6 +108,9 @@
             // 
             // oldPrice
             // 
+            this.oldPrice.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.oldPrice.AutoSize = true;
             this.oldPrice.Enabled = false;
             this.oldPrice.Location = new System.Drawing.Point(31, 317);
@@ -111,6 +123,9 @@
             // 
             this.itemData.AllowUserToAddRows = false;
             this.itemData.AllowUserToDeleteRows = false;
+            this.itemData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.itemData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.itemData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.itemData.ColumnHeadersVisible = false;
@@ -141,6 +156,9 @@
             // 
             // addToCart
             // 
+            this.addToCart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.addToCart.Location = new System.Drawing.Point(31, 409);
             this.addToCart.Name = "addToCart";
             this.addToCart.Size = new System.Drawing.Size(94, 29);
